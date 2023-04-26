@@ -1,0 +1,75 @@
+﻿@page
+@model UltraCoolBooks.Pages.Books.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/css/bookrating.css"/>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+<div class="d-flex p-2 gap-5">
+    <div>
+        <img src="~/images/book-images/@Model.Book.ImagePath" style="width:auto;height:300px" />
+            <div style="font-size:1.5rem">
+                <i data-star="@ViewData["AverageRating"]" class="mt-1"></i>
+                <p class="mt-1">Rating: @ViewData["AverageRating"]</p>
+            </div>
+    </div>
+    <div class="d-flex flex-column">
+    <h1>@Model.Book.Title</h1>
+    <div class="card mt-2 p-2">
+        <p>@Model.Book.Description</p>
+        <p>
+            @foreach (var genre in Model.Book.BookGenres)
+            {
+                @genre.GenresGenre.Title 
+                //Will add a comma after each genre apart from the last
+                @if (genre != Model.Book.BookGenres.Last())
+                {
+                   <text>, </text> 
+                    
+                } 
+            }
+
+        </p>
+            <p>
+                @foreach (var author in Model.Book.AuthorBooks)
+                {
+                    @($"{author.Author.FirstName} {author.Author.LastName}")
+
+                    @if (author != Model.Book.AuthorBooks.Last())
+                    {
+                        <text>, </text>
+                    }
+                }
+            </p>
+            <p>@Model.Book.ReleaseDate</p>
+
+
+    </div>
+
+
+
+</div>
+    
+</div>
+
+
+    <partial name="_LeaveReview" />
+
+      <div>
+          <h2>Reviews</h2>
+    @if (Model.Reviews == null || Model.Reviews.Count <=0)
+    {
+        <p>There are no reviews for this book yet</p>
+    }
+    else
+    {
+        <partial name="_ExistingReviews"/>
+    }
+
+      </div>
+
+
