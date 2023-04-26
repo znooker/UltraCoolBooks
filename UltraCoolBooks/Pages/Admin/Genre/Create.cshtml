@@ -1,0 +1,40 @@
+﻿@page
+@model UltraCoolBooks.Pages.Admin.Genre.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "../_LayoutAdmin.cshtml";
+}
+
+<h1>Create Genre</h1>
+
+<h4>Genre</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-1">
+                <label asp-for="Genre.Title" class="control-label"></label>
+                <input type="text" asp-for="Genre.Title" class="form-control" placeholder="Genre Title"/>
+                <span asp-validation-for="Genre.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-1">
+                <label asp-for="Genre.Description" class="control-label"></label>
+                <textarea asp-for="Genre.Description" class="form-control" rows="8" placeholder="Genre Description"></textarea>
+                <span asp-validation-for="Genre.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

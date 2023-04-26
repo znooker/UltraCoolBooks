@@ -1,0 +1,79 @@
+﻿@page
+@model SuperCoolBooks.Pages.Admin.Book.LabCreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "../_LayoutAdmin.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+          @*  <div class="form-group">
+                <label asp-for="Book.UserId" class="control-label"></label>
+                <select asp-for="Book.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+            </div>*@
+
+           @* <div class="form-group">
+                <input type="hidden" asp-for="" class="form-control"/>
+            </div>*@
+
+
+            <div class="form-group">
+                <label asp-for="Book.Title" class="control-label"></label>
+                <input asp-for="Book.Title" class="form-control" />
+                <span asp-validation-for="Book.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.Description" class="control-label"></label>
+                <input asp-for="Book.Description" class="form-control" />
+                <span asp-validation-for="Book.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.AuthorBooks" class="control-label"></label>
+                <select name="AuthorId" class="form-control" asp-items="Model.Authors"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.BookGenres" class="control-label"></label>
+                <select asp-for="Genres" name="GenreId" class="form-control" asp-items="Model.Genres"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.ISBN" class="control-label"></label>
+                <input asp-for="Book.ISBN" class="form-control" />
+                <span asp-validation-for="Book.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" type="file" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="Book.ReleaseDate" class="control-label"></label>
+                <input asp-for="Book.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Book.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
