@@ -1,0 +1,39 @@
+﻿@using UltraCoolBooks.Models;
+@model UltraCoolBooks.Pages.Books.DetailsModel
+
+    
+    @foreach (var review in Model.Reviews)
+    {
+     <div class="card mt-2" style="width:40rem">
+         <div class="card-body">
+         <h5>@review.Title</h5>
+         <p style="font-size:1rem">Rating: @review.Rating</p>
+         <p style="font-size:0.85rem">@review.ReviewText</p>
+
+          <form method="post" asp-page-handler="reviewfeedback" asp-route-id="@review.ReviewId">
+            @*<input type="hidden" asp-for="">*@
+            @*Hardcoded userid to be 1 change later when we got login to work*@
+            <input type="hidden" asp-for="ReviewFeedback.UserId" value="1">
+            <button type="submit" title="I like this" class="btn btn-success" name="isHelpful" value="true"><i class="bi bi-hand-thumbs-up"></i></button>
+            <button type="submit" title="I dislike this" class="btn btn-danger" name="isHelpful" value="false"><i class="bi bi-hand-thumbs-down"></i></button>
+            <button type="submit" title="Flag review" class="btn btn-danger" name="hasFlagged" value="true"><i class="bi bi-flag"></i></button>
+            <button type="submit" title="Edit review" class="btn btn-secondary" name="editReview" asp-page-handler="editReview" asp-route-id="@review.ReviewId"><i class="bi bi-pencil-square"></i></button>
+         </form>
+         @if (review.Likes != 0) {
+                <p class="mt-1">Likes: @review.Likes</p>
+            }
+         
+            
+
+         <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId">
+             <button type="submit" title="Delete review" class="btn btn-danger mt-2">Delete</button>
+         </form>
+           
+
+        
+         </div>
+     </div>
+
+
+    }
+

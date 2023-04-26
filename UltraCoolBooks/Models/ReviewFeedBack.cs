@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using UltraCoolBooks.Data;
 
 namespace UltraCoolBooks.Models;
 
@@ -17,5 +18,6 @@ public partial class ReviewFeedBack
 
     public bool? HasFlagged { get; set; }
 
-    public virtual Review Review { get; set; }
+    public virtual Review? Review { get; set; }
+    public virtual UltraCoolUser User { get; set; }
 }

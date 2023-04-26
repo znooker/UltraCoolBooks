@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using UltraCoolBooks.Data;
 
 namespace UltraCoolBooks.Models;
 
@@ -30,4 +31,6 @@ public partial class Book
     public virtual ICollection<BookGenre> BookGenres { get; } = new List<BookGenre>();
 
     public virtual ICollection<Review> Reviews { get; } = new List<Review>();
+
+    public virtual UltraCoolUser User { get; set; }
 }
