@@ -7,17 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SuperCoolBooks.Data;
-using SuperCoolBooks.Models;
+using UltraCoolBooks.Data;
+using UltraCoolBooks.Models;
 
-namespace SuperCoolBooks.Pages.Admin.Book
+namespace UltraCoolBooks.Pages.Admin.Book
 {
     public class EditModel : PageModel
     {
-        private readonly SuperCoolBooks.Data.SuperCoolBooksContext _context;
+        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EditModel(SuperCoolBooks.Data.SuperCoolBooksContext context, IWebHostEnvironment webHostEnvironment)
+        public EditModel(UltraCoolBooks.Data.ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -64,7 +64,7 @@ namespace SuperCoolBooks.Pages.Admin.Book
 
             PopulateOptionLists();
 
-            ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            //ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             return Page();
         }
 
@@ -104,7 +104,7 @@ namespace SuperCoolBooks.Pages.Admin.Book
             {
                 ModelState.AddModelError("Image", "File needs to be of type .png, .jpg or .jpeg");
 
-                ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+                //ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
 
                 PopulateOptionLists();
 

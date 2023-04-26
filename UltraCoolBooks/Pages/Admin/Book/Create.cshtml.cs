@@ -89,7 +89,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
             {
                 ModelState.AddModelError("Image", "File needs to be of type .png, .jpg or .jpeg");
 
-                ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+                //ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
 
                 PopulateOptionLists();
 

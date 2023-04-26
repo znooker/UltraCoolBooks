@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SuperCoolBooks.Data;
-using SuperCoolBooks.Models;
+using UltraCoolBooks.Data;
+using UltraCoolBooks.Models;
 
-namespace SuperCoolBooks.Pages.Admin.Genre
+namespace UltraCoolBooks.Pages.Admin.Genre
 {
     public class CreateModel : PageModel
     {
-        private readonly SuperCoolBooks.Data.SuperCoolBooksContext _context;
+        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
 
-        public CreateModel(SuperCoolBooks.Data.SuperCoolBooksContext context)
+        public CreateModel(UltraCoolBooks.Data.ApplicationDbContext context)
         {
             _context = context;
         }

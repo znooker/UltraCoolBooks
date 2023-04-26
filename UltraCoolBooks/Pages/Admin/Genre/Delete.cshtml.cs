@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
-using SuperCoolBooks.Data;
-using SuperCoolBooks.Models;
+using UltraCoolBooks.Data;
+using UltraCoolBooks.Models;
 
-namespace SuperCoolBooks.Pages.Admin.Genre
+namespace UltraCoolBooks.Pages.Admin.Genre
 {
     public class DeleteModel : PageModel
     {
-        private readonly SuperCoolBooks.Data.SuperCoolBooksContext _context;
+        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
 
-        public DeleteModel(SuperCoolBooks.Data.SuperCoolBooksContext context)
+        public DeleteModel(UltraCoolBooks.Data.ApplicationDbContext context)
         {
             _context = context;
         }

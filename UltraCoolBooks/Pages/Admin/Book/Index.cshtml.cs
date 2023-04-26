@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SuperCoolBooks.Data;
-using SuperCoolBooks.Models;
+using UltraCoolBooks.Data;
+using UltraCoolBooks.Models;
 
-namespace SuperCoolBooks.Pages.Admin.Book
+namespace UltraCoolBooks.Pages.Admin.Book
 {
     public class IndexModel : PageModel
     {
-        private readonly SuperCoolBooks.Data.SuperCoolBooksContext _context;
+        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public IndexModel(SuperCoolBooks.Data.SuperCoolBooksContext context, IWebHostEnvironment webHostEnvironment)
+        public IndexModel(UltraCoolBooks.Data.ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
