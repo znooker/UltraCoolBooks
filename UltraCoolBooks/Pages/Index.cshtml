@@ -1,10 +1,138 @@
 ﻿@page
 @model IndexModel
+@inject UltraCoolBooks.Data.ApplicationDbContext _context
+
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<form method="get">
+  <div class="input-group mb-3">
+  <input type="text" class="form-control" asp-for="SearchString" placeholder="Search..."  aria-describedby="button-addon2">
+  <button class="btn btn-outline-secondary" type="submit">Search</button>
 </div>
+</form>
+
+
+
+@if( 1 == 2){
+
+
+
+@if (Model.Books.Count == 0)
+{
+    <p>No search result</p>
+}
+
+
+ @*Container for the top selected / random book. A larger field and more information.*@
+@if(Model.RandomBook != null)
+{
+    @*Container for the top selected / random book. A larger field and more information.*@
+    <div class="container" onclick="redirectToDetailsPage()">
+        @*JAVASCRIPT - click on the div to get to book-detailspage*@
+    <script>
+        function redirectToDetailsPage() {
+            var bookId = '@Model.RandomBook.BookId';
+                window.location.href = './Books/Details?id=' + bookId;
+        }
+    </script>
+
+        <div class="row" style=" justify-content: center; padding: 5em;">
+
+            <div class="col-md-1">
+
+                
+            </div>
+            <div class="col-md-4">
+
+                <img src="~/images/book-images/@Model.RandomBook.ImagePath" style="height:55vh;" />
+            </div>
+            <div class="col-md-7">
+              
+                    @if (Model.RandomBook != null)
+                    {
+                    <!-- Print TITLE -->
+                    <p>Titel: @Model.RandomBook.Title</p>
+                    <!-- Print AUTHOR -->
+                    <p>Author:
+                           @foreach (var item in Model.RandomBook.AuthorBooks)
+                           {
+                                @item.Author.FirstName
+
+                           }
+                      &#32; <!-- &#32 = This is a whitespace -->
+
+                           @foreach (var item in Model.RandomBook.AuthorBooks)
+                           {
+                                @item.Author.LastName
+                           }
+                    </p>
+                    <!-- Print GENRE -->
+                    <p>Genre: 
+                         @foreach (var item in Model.RandomBook.BookGenres)
+                         {
+                                @item.GenresGenre.Title
+                         }
+                    </p>
+                    <!-- Print DESCRIPTION -->
+                    <p>
+                        Description: @Model.RandomBook.Description
+                       
+                        
+                    </p>
+                    }
+                 
+                 
+            </div>
+        </div>
+    </div>
+
+
+
+
+}
+
+}
+
+
+
+        @*JAVASCRIPT - click on the div to get to book-detailspage*@
+       <script>
+           function redirectToDetailsPage2(element) {
+           var bookId = element.getAttribute("data-bookid");
+           window.location.href = './Books/Details?id=' + bookId;
+                        }
+    </script>
+
+
+@if (Model.Books != null)
+{
+@*Container for the other books. A responsive grid.*@
+    <div class="row row-cols-1 row-cols-md-5" >
+    @foreach (var item in Model.Books){
+    <div class="col">
+                <div class="card h-100" data-bookid="@item.BookId" onclick="redirectToDetailsPage2(this)" ;>
+            <img src="~/images/book-images/@item.ImagePath" class="card-img-top" />
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text">
+                        @foreach (var item2 in item.AuthorBooks)
+                        {
+                            @item2.Author.FirstName
+                        }
+                        &#32; <!-- &#32 = This is a whitespace -->
+                        @foreach (var item2 in item.AuthorBooks)
+                        {
+                            @item2.Author.LastName
+                        }
+                    </p>
+            </div>
+        </div>
+    </div>
+    } 
+</div>
+     
+}
+
+
