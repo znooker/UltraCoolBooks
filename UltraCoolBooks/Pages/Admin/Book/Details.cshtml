@@ -1,0 +1,106 @@
+﻿@page
+@model UltraCoolBooks.Pages.Admin.Book.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "../_LayoutAdmin.cshtml";
+}
+
+
+
+<h1>Details</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.BookGenres)
+        </dt>
+        <dd class="col-sm-10">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" style="width:15%" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                           Show all
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        @foreach (var item in Model.Book.BookGenres)
+                        {
+                            <div class="accordion-body">@item.GenresGenre.Title</div>
+
+                        }
+                    </div>
+                </div>
+                
+            </div>
+
+        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Authors)
+        </dt>
+        <ul class="list-group-flush">
+                @foreach (var item in Model.Authors)
+                {
+                <li class="list-group-item">@item.FirstName @item.LastName</li>
+
+                }
+        </ul>
+         
+            
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ISBN)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ISBN)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ImagePath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.isDeleted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.isDeleted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Created)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Created)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ReleaseDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.UserId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Book?.BookId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

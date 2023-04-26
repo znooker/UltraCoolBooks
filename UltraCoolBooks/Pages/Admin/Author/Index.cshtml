@@ -1,0 +1,74 @@
+﻿@page
+@model SuperCoolBooks.Pages.Admin.Author.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "../_LayoutAdmin.cshtml";
+
+}
+
+<h1>Authors</h1>
+
+<p>
+    <a class="btn btn-success" asp-page="Create">New Author</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Author[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author[0].BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author[0].Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author[0].ImagePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Author) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.ImagePath)*@
+                    <img src="~/images/author-images/@item.ImagePath" style="height:50px;width:auto" alt="@item.FirstName @item.LastName" />
+                </td>
+                @{
+                    if (item.FirstName.ToLower() == "unknown" && item.LastName.ToLower() == "unknown")
+                    {
+                        <td> <a asp-page="./Details" asp-route-id="@item.AuthorId">Details</a></td>
+                    }
+
+                    else
+                    {
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.AuthorId">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.AuthorId">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.AuthorId">Delete</a>
+                        </td>
+                    }
+                }
+
+        </tr>
+}
+    </tbody>
+</table>
