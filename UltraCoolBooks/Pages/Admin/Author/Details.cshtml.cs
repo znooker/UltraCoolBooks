@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SuperCoolBooks.Data;
-using SuperCoolBooks.Models;
+using UltraCoolBooks.Data;
+using UltraCoolBooks.Models;
 
-namespace SuperCoolBooks.Pages.Admin.Author
+namespace UltraCoolBooks.Pages.Admin.Author
 {
     public class DetailsModel : PageModel
     {
-        private readonly SuperCoolBooks.Data.SuperCoolBooksContext _context;
+        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
 
-        public DetailsModel(SuperCoolBooks.Data.SuperCoolBooksContext context)
+        public DetailsModel(UltraCoolBooks.Data.ApplicationDbContext context)
         {
             _context = context;
         }
