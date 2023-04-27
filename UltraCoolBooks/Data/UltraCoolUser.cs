@@ -11,4 +11,5 @@ namespace UltraCoolBooks.Data
 
         public virtual ICollection<ReviewFeedBack> Feedbacks { get; set; }
     }
+
 }
