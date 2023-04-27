@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UltraCoolBooks.Models;
-
+using UltraCoolBooks.Data;
 namespace UltraCoolBooks.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext<UltraCoolUser>
@@ -27,6 +28,43 @@ namespace UltraCoolBooks.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            var adminRoleId = Guid.NewGuid().ToString();
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(new IdentityRoleClaim<string>
+            {
+                Id = 1,
+                RoleId = adminRoleId,
+                ClaimType = "Permission",
+                ClaimValue = "CanAccessAdminPanel"
+            });
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = adminRoleId,
+                Name = "Administrator",
+                NormalizedName = "ADMINISTRATOR"
+            });
+
+
+            var adminUserId = Guid.NewGuid().ToString();
+            modelBuilder.Entity<UltraCoolUser>().HasData(new UltraCoolUser
+            {
+                Id = adminUserId,
+                UserName = "admin@example.com",
+                NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                Email = "admin@example.com",
+                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<UltraCoolUser>().HashPassword(null, "password"),
+                SecurityStamp = string.Empty
+            });
+            
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = adminRoleId,
+                UserId = adminUserId
+            });
+
             modelBuilder.Entity<Author>(entity =>
             {
                 entity.Property(e => e.Created)
@@ -39,6 +77,50 @@ namespace UltraCoolBooks.Data
                     .IsRequired()
                     .HasMaxLength(100);
             });
+
+            modelBuilder.Entity<Author>(entity =>
+            {
+                entity.Property(e => e.Created)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasColumnType("datetime");
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Author>().HasData(new Models.Author()
+            {
+                AuthorId = 1,
+                FirstName = "Unknown",
+                LastName = "Author",
+                BirthDate = new DateTime(1111, 1, 1),
+                ImagePath = "",
+            }, new Models.Author()
+            {
+                AuthorId = 2,
+                FirstName = "J.R.R",
+                LastName = "Tolkien",
+                BirthDate = new DateTime(1942, 4, 1),
+                ImagePath = "https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg",
+            },
+             new Models.Author()
+             {
+                 AuthorId = 3,
+                 FirstName = "William",
+                 LastName = "Gibson",
+                 BirthDate = new DateTime(1942),
+                 ImagePath = "",
+             }, new Models.Author()
+             {
+                 AuthorId = 4,
+                 FirstName = "Rafal",
+                 LastName = "Kosik",
+                 BirthDate = new DateTime(1971, 3, 1),
+                 ImagePath = "",
+             });
 
             modelBuilder.Entity<AuthorBook>(entity =>
             {
@@ -56,6 +138,7 @@ namespace UltraCoolBooks.Data
                     .HasForeignKey(d => d.BooksBookId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
 
             modelBuilder.Entity<Book>(entity =>
             {
@@ -78,6 +161,84 @@ namespace UltraCoolBooks.Data
                     .HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
+            modelBuilder.Entity<Book>().HasData(new Models.Book()
+            {
+                UserId = adminUserId,
+                BookId = 1,
+                Title = "Neuromancer",
+                Description = "Set in the dystopian future.",
+                ISBN = "9780441012039",
+                ImagePath = "https://external-preview.redd.it/k-PCe5oPyJQxPzROwuOgRFPi7MPewZ10KwkGisBDJtE.jpg?width=640&crop=smart&auto=webp&s=5c0a19fd2d1adcafb282dbbd411e31c1d97bc103",
+                isDeleted = false,
+                ReleaseDate = new DateTime(1984, 1, 7)
+            }, new Models.Book()
+            {
+                UserId = adminUserId,
+                BookId = 2,
+                Title = "The Hobbit",
+                Description = "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold.",
+                ISBN = "9780261102217",
+                ImagePath = "https://s1.adlibris.com/images/206575/the-hobbit.jpg",
+                isDeleted = false,
+                ReleaseDate = new DateTime(1937, 9, 21)
+            }, new Models.Book()
+            {
+                UserId = adminUserId,
+                BookId = 3,
+                Title = "Fellowship of the Ring",
+                Description = "Continuing the story begun in The Hobbit, this is the first part of Tolkien's epic masterpiece, The Lord of the Rings, featuring a striking black cover based on Tolkien's own design, the definitive text, and a detailed map of Middle-earth.",
+                ISBN = "9780261103573",
+                ImagePath = "https://s2.adlibris.com/images/6053898/fellowship-of-the-ring.jpg",
+                isDeleted = false,
+                ReleaseDate = new DateTime(1953, 7, 29)
+            }, new Models.Book()
+            {
+                UserId = adminUserId,
+                BookId = 4,
+                Title = "Burning Chrome",
+                Description = "Ten stories deal with a human memory bank, UFOs, sleep machines, interstellar travel, a Soviet space station, and computer crime",
+                ISBN = "9780441089345",
+                ImagePath = "https://pictures.abebooks.com/isbn/9780441089345-us.jpg",
+                isDeleted = false,
+                ReleaseDate = new DateTime(1984, 4, 2)
+            }, new Models.Book()
+            {
+                UserId = adminUserId,
+                BookId = 5,
+                Title = "No Coincidence",
+                Description = "Set in the world of Cyberpunk 2077, one of the bestselling video games of recent years, from acclaimed Polish science fiction writer Rafal Kosik, this electrifying novel follows a group of strangers as they discover that the dangers of Night City are all too real.",
+                ISBN = "0759557179",
+                ImagePath = "https://m.media-amazon.com/images/I/51F+aTeO11L._SX327_BO1,204,203,200_.jpg",
+                isDeleted = false,
+                ReleaseDate = new DateTime(2023, 9, 3)
+            });
+
+            modelBuilder.Entity<AuthorBook>().HasData(new Models.AuthorBook()
+            {
+                AuthorId = 2,
+                BooksBookId = 2,
+            },
+        new Models.AuthorBook()
+        {
+            AuthorId = 2,
+            BooksBookId = 3,
+        },
+        new Models.AuthorBook()
+        {
+            AuthorId = 3,
+            BooksBookId = 1,
+        },
+        new Models.AuthorBook()
+        {
+            AuthorId = 3,
+            BooksBookId = 4,
+        },
+        new Models.AuthorBook()
+        {
+            AuthorId = 3,
+            BooksBookId = 5,
+        });
+
             modelBuilder.Entity<BookGenre>(entity =>
             {
                 entity.HasKey(e => new { e.BooksBookId, e.GenresGenreId });
@@ -95,6 +256,39 @@ namespace UltraCoolBooks.Data
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
+            modelBuilder.Entity<BookGenre>().HasData(
+       new Models.BookGenre()
+       {
+           BooksBookId = 1,
+           GenresGenreId = 3,
+
+       },
+       new Models.BookGenre()
+       {
+           BooksBookId = 2,
+           GenresGenreId = 2,
+
+       }, new Models.BookGenre()
+       {
+           BooksBookId = 3,
+           GenresGenreId = 2,
+       }, new Models.BookGenre()
+       {
+           BooksBookId = 4,
+           GenresGenreId = 3,
+
+       }, new Models.BookGenre()
+       {
+           BooksBookId = 5,
+           GenresGenreId = 3,
+
+       }, new Models.BookGenre()
+       {
+           BooksBookId = 4,
+           GenresGenreId = 2,
+
+       });
+
             modelBuilder.Entity<Genre>(entity =>
             {
                 entity.HasIndex(e => e.Title, "IX_Genre_Titel");
@@ -110,6 +304,27 @@ namespace UltraCoolBooks.Data
                     .IsRequired()
                     .HasMaxLength(255);
             });
+
+            modelBuilder.Entity<Genre>().HasData(
+        new Models.Genre()
+        {
+            GenreId = 1,
+            Title = "Other",
+            Description = "Other genre that haven't been added to our systems yet!",
+
+        },
+        new Models.Genre()
+        {
+            GenreId = 2,
+            Title = "Fantasy",
+            Description = "Fantasy.",
+
+        }, new Models.Genre()
+        {
+            GenreId = 3,
+            Title = "Cyberpunk",
+            Description = "Cyberpunk.",
+        });
 
             modelBuilder.Entity<Review>(entity =>
             {
@@ -147,6 +362,9 @@ namespace UltraCoolBooks.Data
                     .HasForeignKey(d => d.ReviewId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+
+
 
             OnModelCreatingPartial(modelBuilder);
             base.OnModelCreating(modelBuilder);
