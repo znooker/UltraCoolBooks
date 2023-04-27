@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -100,7 +101,6 @@ namespace UltraCoolBooks.Pages.Books
             return RedirectToPage("/Books/Details", new { id =Review.BookId });
         }
 
-
         public async Task<IActionResult> OnPostDeleteReviewAsync(int id)
         {
             var review = await _context.Reviews.FindAsync(id);
@@ -117,7 +117,6 @@ namespace UltraCoolBooks.Pages.Books
             }
             return RedirectToPage("/Books/Details", new { id = review.BookId });
         }
-
         public async Task<IActionResult> OnPostReviewFeedbackAsync(int id, bool? isHelpful, bool? hasFlagged)
         {
             if (id == 0)
@@ -127,22 +126,25 @@ namespace UltraCoolBooks.Pages.Books
 
             // Get the review for which the user is submitting feedback
             var review = await _context.Reviews.FindAsync(id);
+
             if (review == null)
             {
                 return NotFound();
             }
-
+            // Get the user id of the logged in user
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             // Get the existing review feedback for this review and user, if it exists
             var reviewFeedback = await _context.ReviewFeedBacks
-                .SingleOrDefaultAsync(rf => rf.ReviewId == id && rf.UserId == "1"); // Hardcoded for now
+                .SingleOrDefaultAsync(rf => rf.ReviewId == id && rf.UserId == userId);
 
+            
             if (reviewFeedback == null)
             {
                 // If no review feedback exists, create a new one
                 reviewFeedback = new ReviewFeedBack
                 {
                     ReviewId = id,
-                    UserId = "1", // Hardcoded for now
+                    UserId = userId,
                     IsHelpful = isHelpful,
                     HasFlagged = hasFlagged
                 };
