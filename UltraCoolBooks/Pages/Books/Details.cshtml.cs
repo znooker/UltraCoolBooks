@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,10 +15,11 @@ namespace UltraCoolBooks.Pages.Books
     public class DetailsModel : PageModel
     {
         private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
-
-        public DetailsModel(UltraCoolBooks.Data.ApplicationDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public DetailsModel(UltraCoolBooks.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public Book Book { get; set; } = default!;
@@ -84,6 +86,9 @@ namespace UltraCoolBooks.Pages.Books
         //Posting a Review
         public async Task<IActionResult> OnPostAsyncReview()
         {
+            Review.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -99,6 +104,11 @@ namespace UltraCoolBooks.Pages.Books
         public async Task<IActionResult> OnPostDeleteReviewAsync(int id)
         {
             var review = await _context.Reviews.FindAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != review.UserId && !User.IsInRole("admin"))
+            {
+                return Forbid();
+            }
 
             if (review != null)
             {
@@ -180,8 +190,12 @@ namespace UltraCoolBooks.Pages.Books
         }
         public async Task<IActionResult> OnPostEditReviewAsync(int id)
         {
-            Review.ReviewId = id;
-            return RedirectToPage("/Books/EditReview", new { id =Review.ReviewId });
+            var review = await _context.Reviews.FindAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != review.UserId && !User.IsInRole("admin")){
+                return Forbid();
+            }
+            return RedirectToPage("/Books/EditReview", new { id =review.ReviewId });
         }
     }
 }

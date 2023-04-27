@@ -1,4 +1,5 @@
-﻿@using UltraCoolBooks.Models;
+﻿@using System.Security.Claims;
+@using UltraCoolBooks.Models;
 @model UltraCoolBooks.Pages.Books.DetailsModel
 
     
@@ -17,17 +18,20 @@
             <button type="submit" title="I like this" class="btn btn-success" name="isHelpful" value="true"><i class="bi bi-hand-thumbs-up"></i></button>
             <button type="submit" title="I dislike this" class="btn btn-danger" name="isHelpful" value="false"><i class="bi bi-hand-thumbs-down"></i></button>
             <button type="submit" title="Flag review" class="btn btn-danger" name="hasFlagged" value="true"><i class="bi bi-flag"></i></button>
-            <button type="submit" title="Edit review" class="btn btn-secondary" name="editReview" asp-page-handler="editReview" asp-route-id="@review.ReviewId"><i class="bi bi-pencil-square"></i></button>
          </form>
          @if (review.Likes != 0) {
                 <p class="mt-1">Likes: @review.Likes</p>
             }
          
             
+         @if (User.IsInRole("Admin") || review.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+         {
 
-         <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId">
-             <button type="submit" title="Delete review" class="btn btn-danger mt-2">Delete</button>
+         <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId" class="mt-2">
+             <button type="submit" title="Delete review" class="btn btn-danger">Delete</button>
+             <button type="submit" title="Edit review" class="btn btn-secondary" name="editReview" asp-page-handler="editReview" asp-route-id="@review.ReviewId"><i class="bi bi-pencil-square"></i></button>
          </form>
+         }
            
 
         
