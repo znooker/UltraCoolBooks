@@ -37,40 +37,28 @@ namespace UltraCoolBooks.Pages
                 if (_context.Books != null)
                 {
                     Books = await _context.Books
-                         .Where(e => e.isDeleted == false)
+                    .Where(e => e.isDeleted == false)
                     .Include(e => e.AuthorBooks)
                     .ThenInclude(e => e.Author)
                     .ToListAsync();
 
-                    var bookIds = await _context.Books
-                    .Where(e => e.isDeleted == false)
-                    .Select(e => e.BookId)
-                    .ToListAsync();
+                    //Get a list of all bookId
+                    var bookIdsList = await _context.Books
+                     .Where(e => e.isDeleted == false)
+                     .Select(e => e.BookId)
+                     .ToListAsync();
 
                     var random = new Random();
-                    var bookIdsList = await _context.Books
-                                        .Where(e => e.isDeleted == false)
-                                        .Select(e => e.BookId)
-                                        .ToListAsync();
+                    var count = bookIdsList.Count;
+                    var index = random.Next(count);
 
-                    var randomIndex = random.Next(bookIds.Count);
-                    //var randomBookId = bookIds[randomIndex];
-
-           
-              
-                    
-                  
-                    //    RandomBook = _context.Books
-                    //         .Where(e => e.BookId == randomBookId)
-                    //        .Include(e => e.AuthorBooks)
-                    //        .ThenInclude(e => e.Author)
-                    //         .Include(e => e.BookGenres)
-                    //        .ThenInclude(e => e.GenresGenre)
-                    //        .FirstOrDefault();
-
-                   
+                    if (count > 0)
+                    { 
+                        RandomBook = Books[index];
+                    }
                 }
             }
+
             else 
             {
                 Books = await _context.Books
@@ -84,8 +72,6 @@ namespace UltraCoolBooks.Pages
                   .Include(e => e.AuthorBooks)
                   .ThenInclude(e => e.Author)
                   .ToListAsync();
-
-            
             }
 
         }
