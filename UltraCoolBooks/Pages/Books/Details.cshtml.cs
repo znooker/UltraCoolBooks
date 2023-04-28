@@ -228,33 +228,39 @@ namespace UltraCoolBooks.Pages.Books
         private string GetTimeAgo(DateTime date)
         {
             TimeSpan timeAgo = DateTime.Now.Subtract(date);
-
+            // Check if seconds
             if (timeAgo.TotalSeconds < 60)
             {
                 return $"{timeAgo.Seconds} seconds ago";
             }
+            // Check if minutes
             else if (timeAgo.TotalMinutes < 60)
             {
                 return $"{timeAgo.Minutes} minutes ago";
             }
+            // Check if hours
             else if (timeAgo.TotalHours < 24)
             {
                 return $"{timeAgo.Hours} hours ago";
             }
+            // Check if days
             else if (timeAgo.TotalDays < 30)
             {
                 return $"{timeAgo.Days} days ago";
             }
+            // Check if months
             else if (timeAgo.TotalDays < 365)
             {
-                int months = (int)Math.Floor(timeAgo.TotalDays / 30.0);
+                int months = (int)Math.Floor(timeAgo.TotalDays / 30);
                 return $"{months} months ago";
             }
-            else
+            // Check if years
+            else if (timeAgo.TotalDays >365)
             {
-                int years = (int)Math.Floor(timeAgo.TotalDays / 365.0);
+                int years = (int)Math.Floor(timeAgo.TotalDays / 365);
                 return $"{years} years ago";
             }
+            return null;
         }
     }
 }
