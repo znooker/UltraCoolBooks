@@ -32,7 +32,7 @@ namespace UltraCoolBooks.Pages.Admin.Author
 
         [BindProperty]
         public IFormFile Image { get; set; }
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -44,31 +44,35 @@ namespace UltraCoolBooks.Pages.Admin.Author
                 return Page();
             }
 
-            if (Image != null)
-            {
-                Author.ImagePath = ProcessUploadedFile();
-            }
+
 
             if (!ModelState.IsValid || _context.Authors == null || Author == null)
             {
                 return Page();
             }
 
+
             //Check that the uploaded file is a image(png, jpg or jpeg)
+            Author.ImagePath = GetFileExtension();
             var allowedFileExtensions = new[] { ".png", ".jpg", ".jpeg" };
             var fileExtension = Path.GetExtension(Author.ImagePath); //Gets the file extension of the file
             if (!allowedFileExtensions.Contains(fileExtension)) //Checks if the file does not contain a correct file extension
             {
-                ModelState.AddModelError("Author.ImagePath", "File needs to be of type .png, .jpg or .jpeg");
+                ModelState.AddModelError("Image", "File needs to be of type .png, .jpg or .jpeg");
                 return Page();
             }
 
 
-          //Check if an author with the same Name & Birthdate already exists
-          if (await _context.Authors.AnyAsync(a=>a.FirstName == Author.FirstName && a.LastName == Author.LastName && a.BirthDate == Author.BirthDate))
+            //Check if an author with the same Name & Birthdate already exists
+            if (await _context.Authors.AnyAsync(a => a.FirstName == Author.FirstName && a.LastName == Author.LastName && a.BirthDate == Author.BirthDate))
             {
                 ModelState.AddModelError("Author.FirstName", "An Author with the same Name & Birthdate already exists");
                 return Page();
+            }
+
+            if (Image != null)
+            {
+                Author.ImagePath = ProcessUploadedFile();
             }
 
             _context.Authors.Add(Author);
@@ -96,6 +100,17 @@ namespace UltraCoolBooks.Pages.Admin.Author
                 return fileName;
             }
             //if no file to upload
+            return null;
+        }
+
+        private string GetFileExtension()
+        {
+            //Check if there is a file to upload
+            if (Image != null)
+            {
+                string fileName = Path.GetFileName(Image.FileName);
+                return fileName;
+            }
             return null;
         }
     }
