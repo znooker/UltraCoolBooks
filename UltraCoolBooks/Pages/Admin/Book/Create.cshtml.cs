@@ -73,10 +73,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
                 return Page();
             }
 
-            if (Image != null)
-            {
-                Book.ImagePath = ProcessUploadedFile();
-            }
+
 
 
             //NOT FINISHED!!!! - Set User who Created the book, set the logged in user as the creator - NOT FINISHED!!!!
@@ -92,6 +89,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
             }
 
             //Check that the uploaded file is a image(png, jpg or jpeg)
+            Book.ImagePath = GetFileExtension();
             var allowedFileExtensions = new[] { ".png", ".jpg", ".jpeg" };
             var fileExtension = Path.GetExtension(Book.ImagePath); //Gets the file extension of the file
             if (!allowedFileExtensions.Contains(fileExtension)) //Checks if the file does not contain a correct file extension
@@ -104,6 +102,8 @@ namespace UltraCoolBooks.Pages.Admin.Book
 
                 return Page();
             }
+
+
 
             //Check is same ISBN already exists
             if (await _context.Books.AnyAsync(a => a.ISBN == Book.ISBN))
@@ -119,6 +119,10 @@ namespace UltraCoolBooks.Pages.Admin.Book
                 //return RedirectToPage(Book);
             }
 
+            if (Image != null)
+            {
+                Book.ImagePath = ProcessUploadedFile();
+            }
 
             _context.Books.Add(Book);
 
@@ -179,7 +183,16 @@ namespace UltraCoolBooks.Pages.Admin.Book
             return null;
         }
 
-
+        private string GetFileExtension()
+        {
+            //Check if there is a file to upload
+            if (Image != null)
+            {
+                string fileName = Path.GetFileName(Image.FileName);
+                return fileName;
+            }
+            return null;
+        }
 
     }
 }
