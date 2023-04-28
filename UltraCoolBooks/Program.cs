@@ -27,7 +27,6 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Admin", "ModeratorPolicy");
-
 });
 
 var app = builder.Build();
