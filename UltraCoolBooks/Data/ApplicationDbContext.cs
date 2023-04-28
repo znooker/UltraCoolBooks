@@ -30,6 +30,7 @@ namespace UltraCoolBooks.Data
         {
 
             var adminRoleId = Guid.NewGuid().ToString();
+            var moderatorRoleId = Guid.NewGuid().ToString();
             modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(new IdentityRoleClaim<string>
             {
                 Id = 1,
@@ -43,6 +44,12 @@ namespace UltraCoolBooks.Data
                 Id = adminRoleId,
                 Name = "Administrator",
                 NormalizedName = "ADMINISTRATOR"
+            },
+            new IdentityRole
+            {
+                Id = moderatorRoleId,
+                Name = "Moderator",
+                NormalizedName = "MODERATOR"
             });
 
 
@@ -97,14 +104,14 @@ namespace UltraCoolBooks.Data
                 FirstName = "Unknown",
                 LastName = "Author",
                 BirthDate = new DateTime(1111, 1, 1),
-                ImagePath = "",
+                ImagePath = "no-picture.jpg",
             }, new Models.Author()
             {
                 AuthorId = 2,
                 FirstName = "J.R.R",
                 LastName = "Tolkien",
                 BirthDate = new DateTime(1942, 4, 1),
-                ImagePath = "https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg",
+                ImagePath = "JRR-Tolkien.jpg",
             },
              new Models.Author()
              {
@@ -112,14 +119,14 @@ namespace UltraCoolBooks.Data
                  FirstName = "William",
                  LastName = "Gibson",
                  BirthDate = new DateTime(1942),
-                 ImagePath = "",
+                 ImagePath = "William-Gibson.jpg",
              }, new Models.Author()
              {
                  AuthorId = 4,
                  FirstName = "Rafal",
                  LastName = "Kosik",
                  BirthDate = new DateTime(1971, 3, 1),
-                 ImagePath = "",
+                 ImagePath = "Rafal_Kosik.jpg",
              });
 
             modelBuilder.Entity<AuthorBook>(entity =>
@@ -168,7 +175,7 @@ namespace UltraCoolBooks.Data
                 Title = "Neuromancer",
                 Description = "Set in the dystopian future.",
                 ISBN = "9780441012039",
-                ImagePath = "https://external-preview.redd.it/k-PCe5oPyJQxPzROwuOgRFPi7MPewZ10KwkGisBDJtE.jpg?width=640&crop=smart&auto=webp&s=5c0a19fd2d1adcafb282dbbd411e31c1d97bc103",
+                ImagePath = "Neuromancer.jpg",
                 isDeleted = false,
                 ReleaseDate = new DateTime(1984, 1, 7)
             }, new Models.Book()
@@ -178,7 +185,7 @@ namespace UltraCoolBooks.Data
                 Title = "The Hobbit",
                 Description = "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold.",
                 ISBN = "9780261102217",
-                ImagePath = "https://s1.adlibris.com/images/206575/the-hobbit.jpg",
+                ImagePath = "The_Hobbit.jpg",
                 isDeleted = false,
                 ReleaseDate = new DateTime(1937, 9, 21)
             }, new Models.Book()
@@ -188,7 +195,7 @@ namespace UltraCoolBooks.Data
                 Title = "Fellowship of the Ring",
                 Description = "Continuing the story begun in The Hobbit, this is the first part of Tolkien's epic masterpiece, The Lord of the Rings, featuring a striking black cover based on Tolkien's own design, the definitive text, and a detailed map of Middle-earth.",
                 ISBN = "9780261103573",
-                ImagePath = "https://s2.adlibris.com/images/6053898/fellowship-of-the-ring.jpg",
+                ImagePath = "Fellowship_Of_The_Ring.jpg",
                 isDeleted = false,
                 ReleaseDate = new DateTime(1953, 7, 29)
             }, new Models.Book()
@@ -198,7 +205,7 @@ namespace UltraCoolBooks.Data
                 Title = "Burning Chrome",
                 Description = "Ten stories deal with a human memory bank, UFOs, sleep machines, interstellar travel, a Soviet space station, and computer crime",
                 ISBN = "9780441089345",
-                ImagePath = "https://pictures.abebooks.com/isbn/9780441089345-us.jpg",
+                ImagePath = "Burning_Chrome.jpg",
                 isDeleted = false,
                 ReleaseDate = new DateTime(1984, 4, 2)
             }, new Models.Book()
@@ -208,7 +215,7 @@ namespace UltraCoolBooks.Data
                 Title = "No Coincidence",
                 Description = "Set in the world of Cyberpunk 2077, one of the bestselling video games of recent years, from acclaimed Polish science fiction writer Rafal Kosik, this electrifying novel follows a group of strangers as they discover that the dangers of Night City are all too real.",
                 ISBN = "0759557179",
-                ImagePath = "https://m.media-amazon.com/images/I/51F+aTeO11L._SX327_BO1,204,203,200_.jpg",
+                ImagePath = "No_Coincidence.jpg",
                 isDeleted = false,
                 ReleaseDate = new DateTime(2023, 9, 3)
             });

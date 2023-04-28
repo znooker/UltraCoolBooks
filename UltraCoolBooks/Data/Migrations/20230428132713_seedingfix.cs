@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UltraCoolBooks.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class seedingBetter : Migration
+    public partial class seedingfix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,22 +52,26 @@ namespace UltraCoolBooks.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b15daefd-57ab-425a-bf86-4d1f7e24f946", null, "Administrator", "ADMINISTRATOR" });
+                values: new object[,]
+                {
+                    { "686d142d-b413-4f82-aba3-8873688c734c", null, "Moderator", "MODERATOR" },
+                    { "f8f61d0b-0a2e-4212-9359-4b1fcad1b979", null, "Administrator", "ADMINISTRATOR" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "6a7d1edb-9373-4505-be5d-fba6f2560ee1", 0, "d4273c44-bac4-4cc9-b6dd-6d9029038865", "admin@example.com", true, false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEAjtVD6+z0vtdo9Ia9/0ERz3Z57sbMdD3yElAVkc48nIMljCqr6sghG+c3HFLOaJqw==", null, false, "", false, "admin@example.com" });
+                values: new object[] { "016b2ad2-6ee2-4fad-87be-8563b5fd7408", 0, "7a40b78b-3b21-4d24-aef8-41e613f8a044", "admin@example.com", true, false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAECnN6pQ+R3CSNcbbYPWAl/xI8PzFwRAn5Sej35IGrfWwdEhrSQH0E6GRRZOi1WYUIw==", null, false, "", false, "admin@example.com" });
 
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new[] { "AuthorId", "BirthDate", "FirstName", "ImagePath", "LastName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1111, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Unknown", "", "Author" },
-                    { 2, new DateTime(1942, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "J.R.R", "https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg", "Tolkien" },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1942), "William", "", "Gibson" },
-                    { 4, new DateTime(1971, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rafal", "", "Kosik" }
+                    { 1, new DateTime(1111, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Unknown", "no-picture.jpg", "Author" },
+                    { 2, new DateTime(1942, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "J.R.R", "JRR-Tolkien.jpg", "Tolkien" },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1942), "William", "William-Gibson.jpg", "Gibson" },
+                    { 4, new DateTime(1971, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rafal", "Rafal_Kosik.jpg", "Kosik" }
                 });
 
             migrationBuilder.InsertData(
@@ -83,23 +87,23 @@ namespace UltraCoolBooks.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoleClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
-                values: new object[] { 1, "Permission", "CanAccessAdminPanel", "b15daefd-57ab-425a-bf86-4d1f7e24f946" });
+                values: new object[] { 1, "Permission", "CanAccessAdminPanel", "f8f61d0b-0a2e-4212-9359-4b1fcad1b979" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "b15daefd-57ab-425a-bf86-4d1f7e24f946", "6a7d1edb-9373-4505-be5d-fba6f2560ee1" });
+                values: new object[] { "f8f61d0b-0a2e-4212-9359-4b1fcad1b979", "016b2ad2-6ee2-4fad-87be-8563b5fd7408" });
 
             migrationBuilder.InsertData(
                 table: "Books",
                 columns: new[] { "BookId", "Description", "ISBN", "ImagePath", "ReleaseDate", "Title", "UserId", "isDeleted" },
                 values: new object[,]
                 {
-                    { 1, "Set in the dystopian future.", "9780441012039", "https://external-preview.redd.it/k-PCe5oPyJQxPzROwuOgRFPi7MPewZ10KwkGisBDJtE.jpg?width=640&crop=smart&auto=webp&s=5c0a19fd2d1adcafb282dbbd411e31c1d97bc103", new DateTime(1984, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "Neuromancer", "6a7d1edb-9373-4505-be5d-fba6f2560ee1", false },
-                    { 2, "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold.", "9780261102217", "https://s1.adlibris.com/images/206575/the-hobbit.jpg", new DateTime(1937, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "The Hobbit", "6a7d1edb-9373-4505-be5d-fba6f2560ee1", false },
-                    { 3, "Continuing the story begun in The Hobbit, this is the first part of Tolkien's epic masterpiece, The Lord of the Rings, featuring a striking black cover based on Tolkien's own design, the definitive text, and a detailed map of Middle-earth.", "9780261103573", "https://s2.adlibris.com/images/6053898/fellowship-of-the-ring.jpg", new DateTime(1953, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Fellowship of the Ring", "6a7d1edb-9373-4505-be5d-fba6f2560ee1", false },
-                    { 4, "Ten stories deal with a human memory bank, UFOs, sleep machines, interstellar travel, a Soviet space station, and computer crime", "9780441089345", "https://pictures.abebooks.com/isbn/9780441089345-us.jpg", new DateTime(1984, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Burning Chrome", "6a7d1edb-9373-4505-be5d-fba6f2560ee1", false },
-                    { 5, "Set in the world of Cyberpunk 2077, one of the bestselling video games of recent years, from acclaimed Polish science fiction writer Rafal Kosik, this electrifying novel follows a group of strangers as they discover that the dangers of Night City are all too real.", "0759557179", "https://m.media-amazon.com/images/I/51F+aTeO11L._SX327_BO1,204,203,200_.jpg", new DateTime(2023, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "No Coincidence", "6a7d1edb-9373-4505-be5d-fba6f2560ee1", false }
+                    { 1, "Set in the dystopian future.", "9780441012039", "Neuromancer.jpg", new DateTime(1984, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "Neuromancer", "016b2ad2-6ee2-4fad-87be-8563b5fd7408", false },
+                    { 2, "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold.", "9780261102217", "The_Hobbit.jpg", new DateTime(1937, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "The Hobbit", "016b2ad2-6ee2-4fad-87be-8563b5fd7408", false },
+                    { 3, "Continuing the story begun in The Hobbit, this is the first part of Tolkien's epic masterpiece, The Lord of the Rings, featuring a striking black cover based on Tolkien's own design, the definitive text, and a detailed map of Middle-earth.", "9780261103573", "Fellowship_Of_The_Ring.jpg", new DateTime(1953, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Fellowship of the Ring", "016b2ad2-6ee2-4fad-87be-8563b5fd7408", false },
+                    { 4, "Ten stories deal with a human memory bank, UFOs, sleep machines, interstellar travel, a Soviet space station, and computer crime", "9780441089345", "Burning_Chrome.jpg", new DateTime(1984, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Burning Chrome", "016b2ad2-6ee2-4fad-87be-8563b5fd7408", false },
+                    { 5, "Set in the world of Cyberpunk 2077, one of the bestselling video games of recent years, from acclaimed Polish science fiction writer Rafal Kosik, this electrifying novel follows a group of strangers as they discover that the dangers of Night City are all too real.", "0759557179", "No_Coincidence.jpg", new DateTime(2023, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "No Coincidence", "016b2ad2-6ee2-4fad-87be-8563b5fd7408", false }
                 });
 
             migrationBuilder.InsertData(
@@ -173,9 +177,14 @@ namespace UltraCoolBooks.Data.Migrations
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "686d142d-b413-4f82-aba3-8873688c734c");
+
+            migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "b15daefd-57ab-425a-bf86-4d1f7e24f946", "6a7d1edb-9373-4505-be5d-fba6f2560ee1" });
+                keyValues: new object[] { "f8f61d0b-0a2e-4212-9359-4b1fcad1b979", "016b2ad2-6ee2-4fad-87be-8563b5fd7408" });
 
             migrationBuilder.DeleteData(
                 table: "AuthorBook",
@@ -250,7 +259,7 @@ namespace UltraCoolBooks.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "b15daefd-57ab-425a-bf86-4d1f7e24f946");
+                keyValue: "f8f61d0b-0a2e-4212-9359-4b1fcad1b979");
 
             migrationBuilder.DeleteData(
                 table: "Authors",
@@ -300,7 +309,7 @@ namespace UltraCoolBooks.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "6a7d1edb-9373-4505-be5d-fba6f2560ee1");
+                keyValue: "016b2ad2-6ee2-4fad-87be-8563b5fd7408");
 
             migrationBuilder.AddColumn<string>(
                 name: "UltraCoolUserId",

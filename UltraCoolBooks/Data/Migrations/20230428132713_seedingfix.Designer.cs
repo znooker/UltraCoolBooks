@@ -12,8 +12,8 @@ using UltraCoolBooks.Data;
 namespace UltraCoolBooks.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230427131547_seedingBetter")]
-    partial class seedingBetter
+    [Migration("20230428132713_seedingfix")]
+    partial class seedingfix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,9 +54,15 @@ namespace UltraCoolBooks.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b15daefd-57ab-425a-bf86-4d1f7e24f946",
+                            Id = "f8f61d0b-0a2e-4212-9359-4b1fcad1b979",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "686d142d-b413-4f82-aba3-8873688c734c",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
                         });
                 });
 
@@ -90,7 +96,7 @@ namespace UltraCoolBooks.Data.Migrations
                             Id = 1,
                             ClaimType = "Permission",
                             ClaimValue = "CanAccessAdminPanel",
-                            RoleId = "b15daefd-57ab-425a-bf86-4d1f7e24f946"
+                            RoleId = "f8f61d0b-0a2e-4212-9359-4b1fcad1b979"
                         });
                 });
 
@@ -160,8 +166,8 @@ namespace UltraCoolBooks.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
-                            RoleId = "b15daefd-57ab-425a-bf86-4d1f7e24f946"
+                            UserId = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
+                            RoleId = "f8f61d0b-0a2e-4212-9359-4b1fcad1b979"
                         });
                 });
 
@@ -253,15 +259,15 @@ namespace UltraCoolBooks.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
+                            Id = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d4273c44-bac4-4cc9-b6dd-6d9029038865",
+                            ConcurrencyStamp = "7a40b78b-3b21-4d24-aef8-41e613f8a044",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAjtVD6+z0vtdo9Ia9/0ERz3Z57sbMdD3yElAVkc48nIMljCqr6sghG+c3HFLOaJqw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECnN6pQ+R3CSNcbbYPWAl/xI8PzFwRAn5Sej35IGrfWwdEhrSQH0E6GRRZOi1WYUIw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -309,7 +315,7 @@ namespace UltraCoolBooks.Data.Migrations
                             BirthDate = new DateTime(1111, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Unknown",
-                            ImagePath = "",
+                            ImagePath = "no-picture.jpg",
                             LastName = "Author"
                         },
                         new
@@ -318,7 +324,7 @@ namespace UltraCoolBooks.Data.Migrations
                             BirthDate = new DateTime(1942, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "J.R.R",
-                            ImagePath = "https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg",
+                            ImagePath = "JRR-Tolkien.jpg",
                             LastName = "Tolkien"
                         },
                         new
@@ -327,7 +333,7 @@ namespace UltraCoolBooks.Data.Migrations
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1942),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "William",
-                            ImagePath = "",
+                            ImagePath = "William-Gibson.jpg",
                             LastName = "Gibson"
                         },
                         new
@@ -336,7 +342,7 @@ namespace UltraCoolBooks.Data.Migrations
                             BirthDate = new DateTime(1971, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Rafal",
-                            ImagePath = "",
+                            ImagePath = "Rafal_Kosik.jpg",
                             LastName = "Kosik"
                         });
                 });
@@ -441,10 +447,10 @@ namespace UltraCoolBooks.Data.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Set in the dystopian future.",
                             ISBN = "9780441012039",
-                            ImagePath = "https://external-preview.redd.it/k-PCe5oPyJQxPzROwuOgRFPi7MPewZ10KwkGisBDJtE.jpg?width=640&crop=smart&auto=webp&s=5c0a19fd2d1adcafb282dbbd411e31c1d97bc103",
+                            ImagePath = "Neuromancer.jpg",
                             ReleaseDate = new DateTime(1984, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Neuromancer",
-                            UserId = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
+                            UserId = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
                             isDeleted = false
                         },
                         new
@@ -453,10 +459,10 @@ namespace UltraCoolBooks.Data.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold.",
                             ISBN = "9780261102217",
-                            ImagePath = "https://s1.adlibris.com/images/206575/the-hobbit.jpg",
+                            ImagePath = "The_Hobbit.jpg",
                             ReleaseDate = new DateTime(1937, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "The Hobbit",
-                            UserId = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
+                            UserId = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
                             isDeleted = false
                         },
                         new
@@ -465,10 +471,10 @@ namespace UltraCoolBooks.Data.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Continuing the story begun in The Hobbit, this is the first part of Tolkien's epic masterpiece, The Lord of the Rings, featuring a striking black cover based on Tolkien's own design, the definitive text, and a detailed map of Middle-earth.",
                             ISBN = "9780261103573",
-                            ImagePath = "https://s2.adlibris.com/images/6053898/fellowship-of-the-ring.jpg",
+                            ImagePath = "Fellowship_Of_The_Ring.jpg",
                             ReleaseDate = new DateTime(1953, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Fellowship of the Ring",
-                            UserId = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
+                            UserId = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
                             isDeleted = false
                         },
                         new
@@ -477,10 +483,10 @@ namespace UltraCoolBooks.Data.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Ten stories deal with a human memory bank, UFOs, sleep machines, interstellar travel, a Soviet space station, and computer crime",
                             ISBN = "9780441089345",
-                            ImagePath = "https://pictures.abebooks.com/isbn/9780441089345-us.jpg",
+                            ImagePath = "Burning_Chrome.jpg",
                             ReleaseDate = new DateTime(1984, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Burning Chrome",
-                            UserId = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
+                            UserId = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
                             isDeleted = false
                         },
                         new
@@ -489,10 +495,10 @@ namespace UltraCoolBooks.Data.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Set in the world of Cyberpunk 2077, one of the bestselling video games of recent years, from acclaimed Polish science fiction writer Rafal Kosik, this electrifying novel follows a group of strangers as they discover that the dangers of Night City are all too real.",
                             ISBN = "0759557179",
-                            ImagePath = "https://m.media-amazon.com/images/I/51F+aTeO11L._SX327_BO1,204,203,200_.jpg",
+                            ImagePath = "No_Coincidence.jpg",
                             ReleaseDate = new DateTime(2023, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "No Coincidence",
-                            UserId = "6a7d1edb-9373-4505-be5d-fba6f2560ee1",
+                            UserId = "016b2ad2-6ee2-4fad-87be-8563b5fd7408",
                             isDeleted = false
                         });
                 });
