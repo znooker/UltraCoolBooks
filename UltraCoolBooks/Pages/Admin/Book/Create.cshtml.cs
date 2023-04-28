@@ -58,7 +58,11 @@ namespace UltraCoolBooks.Pages.Admin.Book
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(Models.Book book)
         {
-            var _userId = _userManager.GetUserAsync(User);
+
+            //Hur funkar magin här???!?!"#!¤!¤%"#¤!!¤&"#&¤"
+            var user = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var testid = user.Id;
+
             var test = Request.Form["testAId"];
 
             //IMG Upload
@@ -76,7 +80,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
 
 
             //NOT FINISHED!!!! - Set User who Created the book, set the logged in user as the creator - NOT FINISHED!!!!
-            Book.UserId = "1"; //Hardcoded value
+            Book.UserId = user.Id; //Hardcoded value
 
             if (!ModelState.IsValid || _context.Books == null || Book == null)
             {
