@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UltraCoolBooks.Data;
@@ -15,11 +16,19 @@ builder.Services.AddDefaultIdentity<UltraCoolUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true; 
 
-}).AddEntityFrameworkStores<ApplicationDbContext>();
+}).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ModeratorPolicy", policyBuilder => policyBuilder.RequireRole("Administrator", "Moderator"));
+    options.AddPolicy("AdminPolicy", policyBuilder => policyBuilder.RequireRole("Administrator"));
+});
 
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Admin", "ModeratorPolicy");
 
-builder.Services.AddRazorPages();
+});
 
 var app = builder.Build();
 
