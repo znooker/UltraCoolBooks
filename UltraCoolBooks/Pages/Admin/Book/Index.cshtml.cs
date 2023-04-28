@@ -33,8 +33,13 @@ namespace UltraCoolBooks.Pages.Admin.Book
         {
             if (_context.Books != null)
             {
-                Book = await _context.Books
-                .Include(b => b.User).ToListAsync();
+                //Får inte med sig usern
+                //Book = await _context.Books
+                //.Include(b => b.User).ToListAsync();
+
+
+                //Test utan user
+                Book = await _context.Books.Include(b => b.User).ToListAsync();
             }
         }
     }
