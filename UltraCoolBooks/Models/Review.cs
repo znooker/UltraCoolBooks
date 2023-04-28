@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using UltraCoolBooks.Data;
 
 namespace UltraCoolBooks.Models;
@@ -19,6 +20,10 @@ public partial class Review
     public bool? IsDeleted { get; set; }
 
     public DateTime Created { get; set; }
+
+    // This property should not be added to the database
+    [NotMapped]
+    public string CreatedTimeAgo { get; set; }
 
     public int BookId { get; set; }
 

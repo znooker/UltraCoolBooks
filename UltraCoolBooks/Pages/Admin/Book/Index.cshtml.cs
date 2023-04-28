@@ -14,13 +14,12 @@ namespace UltraCoolBooks.Pages.Admin.Book
 {
     public class IndexModel : PageModel
     {
-        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _context;
+        
 
-        public IndexModel(UltraCoolBooks.Data.ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -33,8 +32,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
         {
             if (_context.Books != null)
             {
-                Book = await _context.Books
-                .Include(b => b.User).ToListAsync();
+                Book = await _context.Books.Include(b => b.User).ToListAsync();
             }
         }
     }

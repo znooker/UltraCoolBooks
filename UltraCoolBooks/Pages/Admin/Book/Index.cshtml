@@ -10,7 +10,6 @@
 
 <p>
     <a class="btn btn-success" asp-page="Create">New Book</a>
-    
 </p>
 <table class="table">
     <thead>
@@ -31,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.Image)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Book[0].isDeleted)
+                Book Status
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].Created)
@@ -56,7 +55,17 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @if(item.Description.Length > 100)
+                    {
+                        string description = item.Description.Substring(0, 99);
+                        description = description + "...";
+                        @description
+                    }
+                    else
+                    {
+                        @item.Description
+                    }
+                    
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ISBN)
@@ -72,16 +81,29 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.isDeleted)
+                    
+                    @if(item.isDeleted == true)
+                    {
+
+                        <p><i class="bi bi-exclamation-octagon book-icon-red book-icon-size"></i> Deleted</p>
+                        
+                    }
+                    else
+                    {
+
+                        <p><i class="bi bi-journal-check book-icon-green book-icon-size"></i> Active</p>
+                    }
+                    
+                    
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Created)
+                    @item.Created.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    @item.ReleaseDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Id)
+                    @Html.DisplayFor(modelItem => item.User.Email)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.BookId">Edit</a> |

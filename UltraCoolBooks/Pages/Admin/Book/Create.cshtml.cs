@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,16 +11,19 @@ using Microsoft.EntityFrameworkCore;
 using UltraCoolBooks.Data;
 using UltraCoolBooks.Models;
 
+
 namespace UltraCoolBooks.Pages.Admin.Book
 {
     public class LabCreateModel : PageModel
     {
-        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<UltraCoolUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public LabCreateModel(UltraCoolBooks.Data.ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public LabCreateModel(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<UltraCoolUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -54,6 +58,11 @@ namespace UltraCoolBooks.Pages.Admin.Book
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(Models.Book book)
         {
+
+            //Hur funkar magin här???!?!"#!¤!¤%"#¤!!¤&"#&¤"
+            var user = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            var testid = user.Id;
+
             var test = Request.Form["testAId"];
 
             //IMG Upload
@@ -71,7 +80,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
 
 
             //NOT FINISHED!!!! - Set User who Created the book, set the logged in user as the creator - NOT FINISHED!!!!
-            Book.UserId = "1"; //Hardcoded value
+            Book.UserId = user.Id; //Hardcoded value
 
             if (!ModelState.IsValid || _context.Books == null || Book == null)
             {

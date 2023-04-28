@@ -7,11 +7,32 @@
 }
 
 <form method="get">
-  <div class="input-group mb-3">
-  <input type="text" class="form-control" asp-for="SearchString" placeholder="Search..."  aria-describedby="button-addon2">
-  <button class="btn btn-outline-secondary" type="submit">Search</button>
-</div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" asp-for="SearchString" placeholder="Search..." aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
 </form>
+@*if(Model.Genres != null && Model.Authors != null){
+
+<form method="get">
+    <select name="selectedGenre">
+        <option value="">Genre</option>
+       @foreach (var item in Model.Genres)
+        {
+            <option value="@item.GenreId">@item.Title</option>
+        }
+    </select>
+    <select name="selectedAuthor">
+        <option value="">Author</option>
+        @foreach (var item in Model.Authors)
+        {
+            <option value="@item.AuthorId">@item.LastName @item.FirstName</option>
+        }
+    </select>
+    <button type="submit">Submit</button>
+</form>
+}*
+
 
 
 
@@ -52,35 +73,35 @@
               
                     @if (Model.RandomBook != null)
                     {
-                    <!-- Print TITLE -->
-                    <p>Titel: @Model.RandomBook.Title</p>
-                    <!-- Print AUTHOR -->
-                    <p>Author:
-                           @foreach (var item in Model.RandomBook.AuthorBooks)
-                           {
-                                @item.Author.FirstName
+                        <!-- Print TITLE -->
+                        <p>Titel: @Model.RandomBook.Title</p>
+                        <!-- Print AUTHOR -->
+                        <p>Author:
+                               @foreach (var item in Model.RandomBook.AuthorBooks)
+                               {
+                                    @item.Author.FirstName
 
-                           }
-                      &#32; <!-- &#32 = This is a whitespace -->
+                               }
+                          &#32; <!-- &#32 = This is a whitespace -->
 
-                           @foreach (var item in Model.RandomBook.AuthorBooks)
-                           {
-                                @item.Author.LastName
-                           }
-                    </p>
-                    <!-- Print GENRE -->
-                    <p>Genre: 
-                         @foreach (var item in Model.RandomBook.BookGenres)
-                         {
-                                @item.GenresGenre.Title
-                         }
-                    </p>
-                    <!-- Print DESCRIPTION -->
-                    <p>
-                        Description: @Model.RandomBook.Description
+                               @foreach (var item in Model.RandomBook.AuthorBooks)
+                               {
+                                    @item.Author.LastName
+                               }
+                        </p>
+                        <!-- Print GENRE -->
+                        <p>Genre: 
+                             @foreach (var item in Model.RandomBook.BookGenres)
+                             {
+                                    @item.GenresGenre.Title
+                             }
+                        </p>
+                        <!-- Print DESCRIPTION -->
+                        <p>
+                            Description: @Model.RandomBook.Description
                        
                         
-                    </p>
+                        </p>
                     }
                  
                  
@@ -93,7 +114,7 @@
 
 }
 
-}
+
 
 
 
