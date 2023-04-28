@@ -38,6 +38,8 @@ namespace UltraCoolBooks.Pages
 
         public async Task OnGetAsync(string selectedGenre, string selectedAuthor)
         {
+            Genres = await _context.Genres.ToListAsync();
+            Authors = await _context.Authors.ToListAsync();
             if (string.IsNullOrEmpty(SearchString))
             {
                 if (_context.Books != null)
