@@ -16,12 +16,17 @@ namespace UltraCoolBooks.Pages.Books
     public class DetailsModel : PageModel
     {
         private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
+        // This interface provides accsess to the current http context which includes info about the request and the user behind the request
         private readonly IHttpContextAccessor _httpContextAccessor;
+        // Creates string _userId that can be used within the class
+        private readonly string _userId;
         public DetailsModel(UltraCoolBooks.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
-        }
+            // Tries to get the value of the userid from the authenticated user
+            _userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    }
 
         public Book Book { get; set; } = default!;
 
@@ -41,20 +46,14 @@ namespace UltraCoolBooks.Pages.Books
                 return NotFound();
             }
 
-            //var book = await _context.Books.FirstOrDefaultAsync(m => m.BookId == id);
-
             var book = await _context.Books
                 .Include(b => b.Reviews)
                 .Include(b => b.AuthorBooks)
                 .ThenInclude(b=>b.Author)
                 .Include(b => b.BookGenres)
                 .ThenInclude(b=>b.GenresGenre)
-
                 .FirstOrDefaultAsync(m => m.BookId == id);
 
-            //var reviews = await _context.Reviews.Where(r => r.BookId == id);
-
-            //var reviews = await _context.Reviews;
             var reviews = _context.Reviews.Where(r => r.BookId == id && r.IsDeleted !=true);
             if (reviews.Any())
             {
@@ -87,7 +86,7 @@ namespace UltraCoolBooks.Pages.Books
         //Posting a Review
         public async Task<IActionResult> OnPostAsyncReview()
         {
-            Review.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Review.UserId = _userId;
 
 
             if (!ModelState.IsValid)
@@ -104,8 +103,8 @@ namespace UltraCoolBooks.Pages.Books
         public async Task<IActionResult> OnPostDeleteReviewAsync(int id)
         {
             var review = await _context.Reviews.FindAsync(id);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId != review.UserId && !User.IsInRole("admin"))
+            // Checks if the logged-in user is not the one who wrote the review and is not an admin.
+            if (_userId != review.UserId && !User.IsInRole("admin"))
             {
                 return Forbid();
             }
@@ -131,11 +130,9 @@ namespace UltraCoolBooks.Pages.Books
             {
                 return NotFound();
             }
-            // Get the user id of the logged in user
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             // Get the existing review feedback for this review and user, if it exists
             var reviewFeedback = await _context.ReviewFeedBacks
-                .SingleOrDefaultAsync(rf => rf.ReviewId == id && rf.UserId == userId);
+                .SingleOrDefaultAsync(rf => rf.ReviewId == id && rf.UserId == _userId);
 
             
             if (reviewFeedback == null)
@@ -144,7 +141,7 @@ namespace UltraCoolBooks.Pages.Books
                 reviewFeedback = new ReviewFeedBack
                 {
                     ReviewId = id,
-                    UserId = userId,
+                    UserId = _userId,
                     IsHelpful = isHelpful,
                     HasFlagged = hasFlagged
                 };
@@ -193,8 +190,8 @@ namespace UltraCoolBooks.Pages.Books
         public async Task<IActionResult> OnPostEditReviewAsync(int id)
         {
             var review = await _context.Reviews.FindAsync(id);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId != review.UserId && !User.IsInRole("admin")){
+            // Checks if the logged-in user is not the one who wrote the review and is not an admin.
+            if (_userId != review.UserId && !User.IsInRole("admin")){
                 return Forbid();
             }
             return RedirectToPage("/Books/EditReview", new { id =review.ReviewId });
