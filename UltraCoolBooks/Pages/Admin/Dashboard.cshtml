@@ -1,0 +1,21 @@
+﻿@page
+
+
+@{
+}
+@{
+    ViewData["Title"] = "Charts";
+}
+<div>
+    <ejs-calendar id="calendar"></ejs-calendar>
+</div>
+
+
+
+<ejs-chart id="container" title="Charts" width="650" height="350">
+    <e-chart-primaryxaxis valueType="Category" labelPlacement="OnTicks"></e-chart-primaryxaxis>
+        <e-series-collection>
+            <e-series  name="Reviews" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+            </e-series>
+        </e-series-collection>
+    </ejs-chart>
