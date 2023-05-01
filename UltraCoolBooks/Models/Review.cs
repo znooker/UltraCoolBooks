@@ -30,6 +30,7 @@ public partial class Review
     public string ReviewText { get; set; }
 
     public int Likes { get; set; }
+    public int FLaggedCount { get; set; }
 
     public int Downvotes { get; set; }
 
