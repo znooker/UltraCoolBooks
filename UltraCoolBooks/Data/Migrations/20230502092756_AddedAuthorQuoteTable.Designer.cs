@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltraCoolBooks.Data;
 
@@ -11,9 +12,11 @@ using UltraCoolBooks.Data;
 namespace UltraCoolBooks.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230502092756_AddedAuthorQuoteTable")]
+    partial class AddedAuthorQuoteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace UltraCoolBooks.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "32da864b-219f-4842-a9c8-8653476a9218",
+                            Id = "5bb91206-08b6-4d08-86c3-926adca299bb",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "344c9a16-8f1b-4c80-af5d-dcf69c4bf462",
+                            Id = "4483939d-0cc6-49f3-9493-398326375502",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -93,7 +96,7 @@ namespace UltraCoolBooks.Data.Migrations
                             Id = 1,
                             ClaimType = "Permission",
                             ClaimValue = "CanAccessAdminPanel",
-                            RoleId = "32da864b-219f-4842-a9c8-8653476a9218"
+                            RoleId = "5bb91206-08b6-4d08-86c3-926adca299bb"
                         });
                 });
 
@@ -163,8 +166,8 @@ namespace UltraCoolBooks.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "59522800-dd79-4950-bdb0-3399a8ea7e52",
-                            RoleId = "32da864b-219f-4842-a9c8-8653476a9218"
+                            UserId = "dc1ae144-0444-4637-81e7-2a597532ecb2",
+                            RoleId = "5bb91206-08b6-4d08-86c3-926adca299bb"
                         });
                 });
 
@@ -256,15 +259,15 @@ namespace UltraCoolBooks.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "59522800-dd79-4950-bdb0-3399a8ea7e52",
+                            Id = "dc1ae144-0444-4637-81e7-2a597532ecb2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c1de0cc5-69f0-4daf-92d3-3b893d545ee4",
+                            ConcurrencyStamp = "e04318cb-8e6f-4fc0-9e81-e7c160ce8f20",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKosgWPT2Da48NSraAvme6MiekhFktK4BBynhNJQrvab7VZlVAPD7wN8bXeJqD8LkQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHsEH5L+E/XZnbRzEo+ouSrwRqfFVhcDTjVUNqwY+OZgLA3uRIdC0qv48FSuTmbNfg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -303,7 +306,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors", (string)null);
+                    b.ToTable("Authors");
 
                     b.HasData(
                         new
@@ -403,14 +406,14 @@ namespace UltraCoolBooks.Data.Migrations
                     b.Property<string>("QuoteText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("AuthorQuoteId");
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("AuthorQuote", (string)null);
+                    b.ToTable("AuthorQuote");
                 });
 
             modelBuilder.Entity("UltraCoolBooks.Models.Book", b =>
@@ -462,7 +465,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "UserId" }, "IX_Books_UserId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
 
                     b.HasData(
                         new
@@ -474,7 +477,7 @@ namespace UltraCoolBooks.Data.Migrations
                             ImagePath = "Neuromancer.jpg",
                             ReleaseDate = new DateTime(1984, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Neuromancer",
-                            UserId = "59522800-dd79-4950-bdb0-3399a8ea7e52",
+                            UserId = "dc1ae144-0444-4637-81e7-2a597532ecb2",
                             isDeleted = false
                         },
                         new
@@ -486,7 +489,7 @@ namespace UltraCoolBooks.Data.Migrations
                             ImagePath = "The_Hobbit.jpg",
                             ReleaseDate = new DateTime(1937, 9, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "The Hobbit",
-                            UserId = "59522800-dd79-4950-bdb0-3399a8ea7e52",
+                            UserId = "dc1ae144-0444-4637-81e7-2a597532ecb2",
                             isDeleted = false
                         },
                         new
@@ -498,7 +501,7 @@ namespace UltraCoolBooks.Data.Migrations
                             ImagePath = "Fellowship_Of_The_Ring.jpg",
                             ReleaseDate = new DateTime(1953, 7, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Fellowship of the Ring",
-                            UserId = "59522800-dd79-4950-bdb0-3399a8ea7e52",
+                            UserId = "dc1ae144-0444-4637-81e7-2a597532ecb2",
                             isDeleted = false
                         },
                         new
@@ -510,7 +513,7 @@ namespace UltraCoolBooks.Data.Migrations
                             ImagePath = "Burning_Chrome.jpg",
                             ReleaseDate = new DateTime(1984, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Burning Chrome",
-                            UserId = "59522800-dd79-4950-bdb0-3399a8ea7e52",
+                            UserId = "dc1ae144-0444-4637-81e7-2a597532ecb2",
                             isDeleted = false
                         },
                         new
@@ -522,7 +525,7 @@ namespace UltraCoolBooks.Data.Migrations
                             ImagePath = "No_Coincidence.jpg",
                             ReleaseDate = new DateTime(2023, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "No Coincidence",
-                            UserId = "59522800-dd79-4950-bdb0-3399a8ea7e52",
+                            UserId = "dc1ae144-0444-4637-81e7-2a597532ecb2",
                             isDeleted = false
                         });
                 });
@@ -603,7 +606,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "Title" }, "IX_Genre_Titel");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
 
                     b.HasData(
                         new
@@ -688,7 +691,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "UserId" }, "IX_Reviews_UserId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("UltraCoolBooks.Models.ReviewFeedBack", b =>
@@ -718,7 +721,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "UserId" }, "IX_ReviewFeedBacks_UserId");
 
-                    b.ToTable("ReviewFeedBacks", (string)null);
+                    b.ToTable("ReviewFeedBacks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

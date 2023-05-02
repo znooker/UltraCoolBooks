@@ -1,0 +1,23 @@
+﻿@page
+@model UltraCoolBooks.Pages.AuthorQuotes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Submit New Quote</a>
+</p>
+ @foreach (var quote in Model.AuthorQuotes)
+    {
+     <div class="card mt-2" style="width:40rem">
+
+         <div class="card-body">
+            <img src="~/images/author-images/@quote.Author.ImagePath" style="width:50px; float:left; margin-right:10px"/>
+            <p>"@quote.QuoteText"</p>
+            <p> - @quote.Author.FullName</p>
+         </div>
+     </div>
+     }
