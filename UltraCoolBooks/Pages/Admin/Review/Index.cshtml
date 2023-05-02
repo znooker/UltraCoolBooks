@@ -1,0 +1,45 @@
+﻿@page
+@model UltraCoolBooks.Pages.Admin.Review.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "../_LayoutAdmin.cshtml";
+}
+
+<h1>Flagged Reviews</h1>
+<hr />
+ @foreach (var review in Model.Reviews)
+    {
+     <div class="card mt-2" style="width:40rem">
+         <div class="card-body">
+         <p>This review is for the book: @review.Book.Title</p>
+         <h5>@review.Title</h5>
+         <p style="font-size:1rem">Rating: @review.Rating</p>
+         <p style="font-size:0.85rem">@review.ReviewText</p>
+
+          <form method="post" asp-page-handler="reviewfeedback" asp-route-id="@review.ReviewId">
+         </form>
+         @if (review.Likes != 0) {
+                <p class="mt-1">Likes: @review.Likes</p>
+            }
+         
+
+
+         <p><b>@review.User.UserName</b></p>
+         <p>This review has been flagged: @review.FLaggedCount @if(review.FLaggedCount == 1)
+                {
+                    <span> time</span>
+                }
+                else
+                {
+                    <span> times</span>
+                }
+
+         </p>
+         <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId" class="mt-2">
+             <button type="submit" title="Delete review" class="btn btn-danger">Delete</button>
+         </form>
+           
+         </div>
+     </div>
+    }

@@ -183,13 +183,20 @@ namespace UltraCoolBooks.Pages.Books
                 {
                     review.Downvotes++;
                 }
+                if (reviewFeedback.HasFlagged == true){
+                    review.FLaggedCount++;
+                }
             }
             else
             {
                 // If review feedback already exists, update its IsHelpful property
                 bool isHelpfulBefore = reviewFeedback.IsHelpful ?? false;
                 reviewFeedback.IsHelpful = isHelpful;
-                reviewFeedback.HasFlagged = hasFlagged ?? false; //default to null
+
+                bool hasFlaggedBefore = reviewFeedback.HasFlagged ?? false;
+                reviewFeedback.HasFlagged = hasFlagged;
+
+
 
                 // Update the Upvotes and Downvotes properties
                 if (isHelpful == true && isHelpfulBefore == false)
@@ -201,6 +208,11 @@ namespace UltraCoolBooks.Pages.Books
                 {
                     review.Downvotes++;
                     review.Upvotes--;
+                }
+
+                if (hasFlaggedBefore == false && hasFlagged == true)
+                {
+                    review.FLaggedCount++;
                 }
             }
 
@@ -228,33 +240,39 @@ namespace UltraCoolBooks.Pages.Books
         private string GetTimeAgo(DateTime date)
         {
             TimeSpan timeAgo = DateTime.Now.Subtract(date);
-
+            // Check if seconds
             if (timeAgo.TotalSeconds < 60)
             {
                 return $"{timeAgo.Seconds} seconds ago";
             }
+            // Check if minutes
             else if (timeAgo.TotalMinutes < 60)
             {
                 return $"{timeAgo.Minutes} minutes ago";
             }
+            // Check if hours
             else if (timeAgo.TotalHours < 24)
             {
                 return $"{timeAgo.Hours} hours ago";
             }
+            // Check if days
             else if (timeAgo.TotalDays < 30)
             {
                 return $"{timeAgo.Days} days ago";
             }
+            // Check if months
             else if (timeAgo.TotalDays < 365)
             {
-                int months = (int)Math.Floor(timeAgo.TotalDays / 30.0);
+                int months = (int)Math.Floor(timeAgo.TotalDays / 30);
                 return $"{months} months ago";
             }
-            else
+            // Check if years
+            else if (timeAgo.TotalDays >365)
             {
-                int years = (int)Math.Floor(timeAgo.TotalDays / 365.0);
+                int years = (int)Math.Floor(timeAgo.TotalDays / 365);
                 return $"{years} years ago";
             }
+            return null;
         }
     }
 }
