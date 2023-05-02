@@ -25,6 +25,7 @@ namespace UltraCoolBooks.Data
         public virtual DbSet<Review> Reviews { get; set; }
 
         public virtual DbSet<ReviewFeedBack> ReviewFeedBacks { get; set; }
+        public virtual DbSet<AuthorQuote> AuthorQuotes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -378,5 +379,7 @@ namespace UltraCoolBooks.Data
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<UltraCoolBooks.Models.AuthorQuote> AuthorQuote { get; set; } = default!;
     }
 }

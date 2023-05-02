@@ -9,7 +9,9 @@ namespace UltraCoolBooks.Data
 
         public virtual ICollection<Review> Reviews { get; } = new List<Review>();
 
-        public virtual ICollection<ReviewFeedBack> Feedbacks { get; set; }
+        public virtual ICollection<ReviewFeedBack> Feedbacks { get; set; } = new List<ReviewFeedBack>();
+
+        public virtual ICollection<AuthorQuote> AuthorQuotes { get; set; } = new List<AuthorQuote>();
     }
 
 }

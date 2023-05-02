@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UltraCoolBooks.Models;
 
@@ -12,6 +13,9 @@ public partial class Author
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
+    // This property should not be mapped to the database
+    [NotMapped]
+    public string FullName => $"{FirstName} {LastName}";
 
     public DateTime BirthDate { get; set; }
 
@@ -20,4 +24,5 @@ public partial class Author
     public string ImagePath { get; set; }
 
     public virtual ICollection<AuthorBook> AuthorBooks { get; } = new List<AuthorBook>();
+    public virtual ICollection<AuthorQuote> AuthorQuotes { get; } = new List<AuthorQuote>();
 }
