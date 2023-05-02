@@ -1,0 +1,124 @@
+﻿@page
+@model UltraCoolBooks.Pages.Admin.User.IndexModel
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Users</h1>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="container">
+    <table class="table table-hover table-fixed">
+        <thead>
+            <tr>
+                <th class="w-75">
+                    Admins
+                </th>
+                <th class="w-25">
+                    Action
+                </th>
+              
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Admins)
+            {
+                <tr>
+                    <td>
+                        @item.Email
+                    </td>
+                   
+                    <td>
+                        <form method="post" asp-page-handler="demote" class="btn-group">
+                            <i></i>
+
+                            <input type="hidden" asp-for="SelectedRole" value="Administrator" />
+                            <input type="hidden" asp-for="SelectedUserId" value="@item.Id" />
+                            <button class="btn btn-danger ">Demote</button>
+                        </form>
+                    </td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+
+    <table class="table table-hover">
+        
+        <thead>
+            <tr>
+                <th class="w-75">
+                    Moderators
+                </th>
+                <th class="w-25">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Moderators)
+            {
+                <tr>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        <div class="btn-toolbar"></div>
+                        <form method="post" class="btn-group mr-2">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="SelectedRole" value="Administrator" />
+                            <input type="hidden" asp-for="SelectedUserId" value="@item.Id" />
+                            <button class="btn btn-primary ">Promote</button>
+                            <i></i>
+                        </form>
+                        <form method="post" asp-page-handler="demote" class="btn-group">
+                            <i></i>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="SelectedRole" value="Moderator" />
+                            <input type="hidden" asp-for="SelectedUserId" value="@item.Id" />
+                            <button class="btn btn-danger ">Demote</button>
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <table class="table table-hover">
+        
+        <thead>
+            <tr>
+                <th class ="w-75">
+                    Users
+                </th>
+                <th class="w-25">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+
+                        <form method="post" class="btn-group">
+                            <input type="hidden" asp-for="SelectedRole" value="Moderator" />
+                            <input type="hidden" asp-for="SelectedUserId" value="@item.Id" />
+                            <button class="btn btn-primary">Promote</button>
+                        </form>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

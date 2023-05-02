@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Admin\Review\" />
-    <Folder Include="Pages\Admin\User\" />
   </ItemGroup>
 
 </Project>
