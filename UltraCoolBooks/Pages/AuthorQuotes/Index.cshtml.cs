@@ -19,7 +19,8 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
             _context = context;
         }
         public List<Models.AuthorQuote> AuthorQuotes { get;set; }
-
+        // This is to check if the user submitted a quote
+        public string SubmitConfirmation { get; set; }
         public async Task OnGetAsync()
         {
             if (_context.AuthorQuote != null)
@@ -28,6 +29,8 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
                 .Include(a => a.Author)
                 .Where(a => a.IsAccepeted == true)
                 .ToListAsync();
+                // Takes data from AuthorQuotes/Create and puts it into a property that can be used in the index page
+                SubmitConfirmation = TempData["SubmitConfirmation"] as string;
             }
             
         }
