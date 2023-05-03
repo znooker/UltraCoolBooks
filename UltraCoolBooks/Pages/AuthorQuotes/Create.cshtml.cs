@@ -52,7 +52,8 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
 
             _context.AuthorQuote.Add(AuthorQuote);
             await _context.SaveChangesAsync();
-
+            // This TempData gets sent to the Index page model
+            TempData["SubmitConfirmation"] = "Thank you, your quote is awaiting review from a moderator";
             return RedirectToPage("./Index");
         }
     }

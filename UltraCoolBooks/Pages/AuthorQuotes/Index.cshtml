@@ -6,7 +6,11 @@
 }
 
 <h1>Index</h1>
-
+@* Checks if the user submitted a quote *@
+@if(Model.SubmitConfirmation != null)
+{
+    <p>@Model.SubmitConfirmation</p>
+}
 <p>
     <a asp-page="Create">Submit New Quote</a>
 </p>
