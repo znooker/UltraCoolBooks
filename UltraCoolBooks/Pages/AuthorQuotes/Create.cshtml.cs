@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using UltraCoolBooks.Data;
@@ -39,13 +40,19 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Challenge();
+            }
+
             AuthorQuote.UserId = _userId;
             AuthorQuote.IsAccepeted = false;
 
-
-          if (!ModelState.IsValid || _context.AuthorQuote == null || AuthorQuote == null)
+            if (!ModelState.IsValid || _context.AuthorQuote == null || AuthorQuote == null)
             {
                 return Page();
             }
