@@ -303,7 +303,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
 
                     b.HasData(
                         new
@@ -414,7 +414,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AuthorQuote");
+                    b.ToTable("AuthorQuote", (string)null);
                 });
 
             modelBuilder.Entity("UltraCoolBooks.Models.Book", b =>
@@ -466,7 +466,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "UserId" }, "IX_Books_UserId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
 
                     b.HasData(
                         new
@@ -607,7 +607,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "Title" }, "IX_Genre_Titel");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
 
                     b.HasData(
                         new
@@ -692,7 +692,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "UserId" }, "IX_Reviews_UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("UltraCoolBooks.Models.ReviewFeedBack", b =>
@@ -722,7 +722,7 @@ namespace UltraCoolBooks.Data.Migrations
 
                     b.HasIndex(new[] { "UserId" }, "IX_ReviewFeedBacks_UserId");
 
-                    b.ToTable("ReviewFeedBacks");
+                    b.ToTable("ReviewFeedBacks", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

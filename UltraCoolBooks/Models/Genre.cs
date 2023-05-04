@@ -8,9 +8,9 @@ namespace UltraCoolBooks.Models;
 public partial class Genre
 {
     public int GenreId { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string Title { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string Description { get; set; }
 
     public DateTime Created { get; set; }

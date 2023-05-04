@@ -35,7 +35,7 @@ namespace UltraCoolBooks.Pages.Books
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Review.ReviewText.Length > 1000 || Review.Title.Length > 255)
             {
                 return Page();
             }

@@ -35,7 +35,7 @@ namespace UltraCoolBooks.Pages.Admin.Genre
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Genres == null || Genre == null)
+          if (!ModelState.IsValid || Genre.Title.Length > 255 || Genre.Description.Length > 1000)
             {
                 
                 return Page();

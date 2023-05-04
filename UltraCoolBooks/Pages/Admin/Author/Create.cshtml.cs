@@ -47,11 +47,12 @@ namespace UltraCoolBooks.Pages.Admin.Author
             }
 
 
-
-            if (!ModelState.IsValid || _context.Authors == null || Author == null)
+            if (!ModelState.IsValid || Author.FirstName.Length > 100 || Author.LastName.Length > 100)
             {
                 return Page();
             }
+
+
 
 
             //Check that the uploaded file is a image(png, jpg or jpeg)

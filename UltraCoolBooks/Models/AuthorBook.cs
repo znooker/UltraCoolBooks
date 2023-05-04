@@ -7,8 +7,9 @@ namespace UltraCoolBooks.Models;
 
 public partial class AuthorBook
 {
+    [System.ComponentModel.DataAnnotations.Required]
     public int AuthorId { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public int BooksBookId { get; set; }
 
     public virtual Author Author { get; set; }

@@ -11,19 +11,19 @@ public partial class Book
     public int BookId { get; set; }
 
     public string UserId { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string Title { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string Description { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string ISBN { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string ImagePath { get; set; }
 
     public bool? isDeleted { get; set; }
 
     public DateTime Created { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public DateTime ReleaseDate { get; set; }
 
     public virtual ICollection<AuthorBook> AuthorBooks { get; } = new List<AuthorBook>();

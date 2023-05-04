@@ -93,7 +93,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
             Book.isDeleted = false;
 
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Book.Title.Length > 255 || Book.Description.Length > 1000 || Book.ISBN.Length > 20)
             {
                 return Page();
             }
