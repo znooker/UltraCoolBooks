@@ -43,7 +43,7 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
 
         public async Task<IActionResult> OnPostAsync()
         {
-
+            // Check if the user is logged in
             if (!User.Identity.IsAuthenticated)
             {
                 return Challenge();
