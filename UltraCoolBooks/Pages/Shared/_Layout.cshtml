@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<UltraCoolUser> SignInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,7 +20,7 @@
             <p class="display-6 fst-italic text-white text-center">Books has never been this cool!</p>
         </div>
     </div>
-    
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -34,26 +37,33 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Books/Index">Books</a>
                         </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AuthorQuotes/Index">Author Quotes</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User)){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/AuthorQuotes/Index">Author Quotes</a>
+                            </li>
+                        }
+                          
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" asp-area="" asp-page="/Admin/Index">Admin</a>
-                        </li>
-                        @* 
-                        Saved to see how dropdown menu is done    
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-area="" asp-page="/Admin/Index">Admin</a>
+                            </li>
+                        }
+
+                        @*
+                        Saved to see how dropdown menu is done
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-danger dropdown-toggle" data-toggle="dropdown" asp-area="" asp-page="/Admin/Book/Index">Admin</a>
-                            <a class="nav-link text-danger dropdown-toggle" data-bs-toggle="dropdown" id="navbardrop" href="#">Admin</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Main</a>
-                                <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Books</a>
-                                <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Authors</a>
-                                <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Genres</a>
-                            </div>
+                        <a class="nav-link text-danger dropdown-toggle" data-toggle="dropdown" asp-area="" asp-page="/Admin/Book/Index">Admin</a>
+                        <a class="nav-link text-danger dropdown-toggle" data-bs-toggle="dropdown" id="navbardrop" href="#">Admin</a>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Main</a>
+                        <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Books</a>
+                        <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Authors</a>
+                        <a class="dropdown-item" aria-current="page" asp-area="" asp-page="#">Genres</a>
+                        </div>
                         </li>*@
                     </ul>
                     <partial name="_LoginPartial" />
