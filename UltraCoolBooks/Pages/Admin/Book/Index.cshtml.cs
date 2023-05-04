@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using UltraCoolBooks.Models;
 
 namespace UltraCoolBooks.Pages.Admin.Book
 {
+    [Authorize(Policy = "AdminPolicy")]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;

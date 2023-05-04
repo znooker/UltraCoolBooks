@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UltraCoolUser> SignInManager
+@inject UserManager<UltraCoolUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,24 +33,29 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-page="/Admin/Index">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Book/Index">Books</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Author/Index">Authors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Genre/Index">Genres</a>
-                    </li>
+                    @if(User.IsInRole("Administrator"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-page="/Admin/Book/Index">Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-page="/Admin/Author/Index">Authors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-page="/Admin/Genre/Index">Genres</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-page="/Admin/User/Index">Users</a>
+                        </li>
+                    }
+                    
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-page="/Admin/Review/Index">Reviews</a>
                     </li>
                       <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-page="/Admin/AuthorQuote/Index">Author Quotes</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-page="/Admin/User/Index">Users</a>
-                    </li>
+                   
                 </ul>
                 <partial name="_LoginPartialAdmin" />
             </div>
