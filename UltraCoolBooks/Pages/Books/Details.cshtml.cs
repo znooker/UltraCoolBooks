@@ -104,7 +104,7 @@ namespace UltraCoolBooks.Pages.Books
 
             if (!ModelState.IsValid)
             {
-                return Page();
+                return RedirectToPage("/Books/Details", new { id = Review.BookId });
             }
             _context.Reviews.Add(Review);
             await _context.SaveChangesAsync();
