@@ -123,7 +123,7 @@ namespace UltraCoolBooks.Pages.Books
 
             var review = await _context.Reviews.FindAsync(id);
             // Checks if the logged-in user is not the one who wrote the review and is not an admin.
-            if (_userId != review.UserId && !User.IsInRole("admin"))
+            if (_userId != review.UserId && !User.IsInRole("Administrator") && !User.IsInRole("Moderator"))
             {
                 return Forbid();
             }
@@ -228,7 +228,8 @@ namespace UltraCoolBooks.Pages.Books
         {
             var review = await _context.Reviews.FindAsync(id);
             // Checks if the logged-in user is not the one who wrote the review and is not an admin.
-            if (_userId != review.UserId && !User.IsInRole("admin"))
+            if (_userId != review.UserId && !User.IsInRole("Administrator") && !User.IsInRole("Moderator"))
+
             {
                 return Forbid();
             }
