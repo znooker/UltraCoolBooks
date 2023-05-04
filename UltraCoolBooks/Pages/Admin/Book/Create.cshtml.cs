@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using UltraCoolBooks.Models;
 
 namespace UltraCoolBooks.Pages.Admin.Book
 {
+    [Authorize(Policy = "AdminPolicy")]
     public class LabCreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;

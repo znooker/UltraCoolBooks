@@ -10,7 +10,7 @@ using UltraCoolBooks.Data;
 
 namespace UltraCoolBooks.Pages.Admin.User
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Policy = "AdminPolicy")]
     public class IndexModel : PageModel
     {
 
