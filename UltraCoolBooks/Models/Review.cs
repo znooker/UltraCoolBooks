@@ -27,6 +27,7 @@ public partial class Review
 
     public int BookId { get; set; }
 
+    [System.ComponentModel.DataAnnotations.Required]
     public string ReviewText { get; set; }
 
     public int Likes { get; set; }
