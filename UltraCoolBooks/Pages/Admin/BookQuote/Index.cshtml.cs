@@ -59,7 +59,7 @@ namespace UltraCoolBooks.Pages.Admin.BookQuote
                 _context.BookQuotes.Remove(quote);
                 _context.SaveChangesAsync();
             }
-            return RedirectToPage("/Admin/AuthorQuote/Index");
+            return RedirectToPage("/Admin/BookQuote/Index");
         }
     }
 }
