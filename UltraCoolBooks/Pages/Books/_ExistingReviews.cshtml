@@ -3,8 +3,12 @@
 
 @inject SignInManager<UltraCoolUser> SignInManager
 @inject UserManager<UltraCoolUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 @model UltraCoolBooks.Pages.Books.DetailsModel
 
+@{
+    var userId = UserManager.GetUserId(HttpContextAccessor.HttpContext.User);
+}
 
 @foreach (var review in Model.Reviews)
 {
@@ -26,13 +30,16 @@
             {
                 <p class="mt-1">Likes: @review.Likes</p>
             }
-
-
-           
+            
+            @if (userId == review.UserId || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+            {
                 <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId" class="mt-2">
                     <button type="submit" title="Delete review" class="btn btn-danger">Delete</button>
                     <button type="submit" title="Edit review" class="btn btn-secondary" name="editReview" asp-page-handler="editReview" asp-route-id="@review.ReviewId"><i class="bi bi-pencil-square"></i></button>
                 </form>
+            }
+
+                
            
             <p><b>@review.User.UserName</b> - @review.CreatedTimeAgo<p>
 
