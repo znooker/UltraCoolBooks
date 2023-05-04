@@ -1,0 +1,65 @@
+﻿@page
+@model UltraCoolBooks.Pages.Admin.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "../_LayoutAdmin.cshtml";
+
+}
+<h1> Reviews</h1>
+<hr />
+@foreach (var review in Model.Reviews)
+{
+   
+        <div>
+
+        <p> @review.Created.ToShortDateString()</p>
+
+        </div>
+
+}
+
+<div >
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@{}
+<script>
+
+    // Setup Block
+    const numbers = [1, 19, 3, 5, 2, 3];
+    const dates = [
+  new Date(2023, 4, 10),  
+  new Date(2023, 4, 15),
+  new Date(2023, 4, 20),
+  new Date(2023, 4, 25),
+  new Date(2023, 4, 30),
+  new Date(2023, 5, 5)
+];
+    const data = {
+        labels: dates,
+      datasets: [{
+        label: ['Reviews a day'],
+        data: numbers,
+        borderWidth: 1
+      }]
+      };
+
+    // Config Block
+    const config = {
+     type: 'bar',
+    data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+    };
+    // Render Block
+  const myChart = new Chart(
+  document.getElementById('myChart'),
+  config
+ );
+</script>
