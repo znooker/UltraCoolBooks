@@ -1,21 +1,166 @@
 ﻿@page
+@model UltraCoolBooks.Pages.Admin.dashboardModel
+@inject UltraCoolBooks.Data.ApplicationDbContext _context
+@{
+	ViewData["Title"] = "Home page";
+
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+
+<body>
+	<label for="start-date">Start date:</label>
+	<input type="date" id="start-date" name="start-date" min="2023-01-01" max="2023-12-31">
+
+	<label for="end-date">End date:</label>
+	<input type="date" id="end-date" name="end-date" min="2023-01-01" max="2023-12-31">
+
+	<script>
+		var startDatePicker = document.getElementById("start-date");
+		var endDatePicker = document.getElementById("end-date");
+
+		var startDate = new Date(startDatePicker.value);
+		var endDate = new Date(endDatePicker.value);
 
 
-@{
-}
-@{
-    ViewData["Title"] = "Charts";
-}
-<div>
-    <ejs-calendar id="calendar"></ejs-calendar>
+	</script>
+	<div>
+  <canvas id="myChart"></canvas>
 </div>
 
+<div class=" chartbox">
+	<canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+	// Setup Block
+	const data = {
+	labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+			datasets: [{
+				label: '# of Votes',
+				data: [12, 19, 3, 5, 2, 3],
+				borderWidth: 1
+	}]
+	};
+
+	// Config Block
+	const config = {
+		  type: 'bar',
+	data,
+	options: {
+	  scales: {
+		y: {
+		  beginAtZero: true
+		}
+	  }
+	}
+	};
+
+	// Render Block
+	const myChart = new Chart(
+	document.getElementById('myChart'),
+	config
+	);
+
+</script>
+		@if (Model.ReviewCounts != null){
+		@foreach (var count in Model.ReviewCounts)
+		{
+			<p>@count.Count</p>
+			<p>@count.Date</p>
+		}
+	}
+	<script>
+	
+
+		
+		fetch('/get')
+  .then(response => response.json())
+  .then(data => {
+	var dataPoints = [];
+
+	data.forEach(item => {
+	  var dateParts = item.date.split('-');
+	  var year = dateParts[0];
+	  var month = dateParts[1] - 1; // Månader är nollindexerade i JavaScript
+	  var day = dateParts[2];
+
+	  dataPoints.push({
+		x: new Date(year, month, day),
+		y: item.count
+	  });
+	});
+
+	var chart = new CanvasJS.Chart("chartContainer", {
+	  // Konfigurationsinställningar för diagrammet
+	  data: [{
+		type: "column",
+		color: "green",
+		indexLabelFontColor: "#5A5757",
+		indexLabelFontSize: 16,
+		indexLabelPlacement: "outside",
+		dataPoints: dataPoints
+	  }]
+	});
+
+	chart.render();
+  });
+
+	
+
+		window.onload = function () {
+
+			var chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
+				exportEnabled: true,
+				theme: "light1", // "light1", "light2", "dark1", "dark2"
+				title: {
+					text: "Number of reviews"
+				},
+				axisX: {
+				intervalType: "day",
+				interval: 1 },// Visa en tick per dag
+				axisY: {
+					includeZero: true
+				},
+				data: [{
+					type: "column", //change type to bar, line, area, pie, etc
+					//indexLabel: "{y}", //Shows y value on all Data Points
+					color: "green",
+					indexLabelFontColor: "#5A5757",
+					indexLabelFontSize: 16,
+					indexLabelPlacement: "outside",
+					dataPoints: [
+				
+						{ x: new Date(2023, 0, 12), y: 55 },
+						{ x: new Date(2023, 0, 13), y: 50 },
+						{ x: new Date(2023, 0, 14), y: 65 }
+			
+					
+					]
+				}]
+			});
+			chart.render();
+
+		}
+	</script>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
-<ejs-chart id="container" title="Charts" width="650" height="350">
-    <e-chart-primaryxaxis valueType="Category" labelPlacement="OnTicks"></e-chart-primaryxaxis>
-        <e-series-collection>
-            <e-series  name="Reviews" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-            </e-series>
-        </e-series-collection>
-    </ejs-chart>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
