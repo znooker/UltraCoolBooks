@@ -1,0 +1,27 @@
+﻿@page
+@model UltraCoolBooks.Pages.BookQuotes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@* Checks if the user submitted a quote *@
+@if(Model.SubmitConfirmation != null)
+{
+    <p>@Model.SubmitConfirmation</p>
+}
+<p>
+    <a asp-page="Create">Submit New Quote</a>
+</p>
+ @foreach (var quote in Model.BookQuotes)
+    {
+     <div class="card mt-2" style="width:40rem">
+
+         <div class="card-body">
+            <img src="~/images/book-images/@quote.Book.ImagePath" style="width:50px; float:left; margin-right:10px"/>
+            <p>"@quote.QuoteText"</p>
+            <p> - @quote.Book.Title</p>
+         </div>
+     </div>
+     }

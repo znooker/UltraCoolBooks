@@ -1,0 +1,45 @@
+﻿@page
+@model UltraCoolBooks.Pages.Admin.BookQuote.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "../_LayoutAdmin.cshtml";
+
+}
+
+<div>
+    <h2>Awaiting Review Quotes</h2>
+    @foreach (var quote in Model.AwaitingReviewQuotes)
+    {
+       <div class="card mt-2" style="width:40rem">
+
+         <div class="card-body">
+            <img src="~/images/book-images/@quote.Book.ImagePath" style="width:50px; float:left; margin-right:10px"/>
+            <p>"@quote.QuoteText"</p>
+            <p> - @quote.Book.Title</p>
+            <form method="post">
+                <button type="submit" title="Accept" class="btn btn-success" asp-page-handler="acceptQuote" asp-route-id="@quote.BookQuoteId">Accept</button>
+                <button type="submit" title="Deny" class="btn btn-danger" asp-page-handler="deleteQuote" asp-route-id="@quote.BookQuoteId">Deny</button>
+            </form>
+         </div>
+     </div>
+    }
+</div>
+
+<div>
+    <h2>Accepted Quotes</h2>
+    @foreach (var quote in Model.AcceptedQuotes)
+    {
+        <div class="card mt-2" style="width:40rem">
+
+         <div class="card-body">
+            <img src="~/images/book-images/@quote.Book.ImagePath" style="width:50px; float:left; margin-right:10px"/>
+            <p>"@quote.QuoteText"</p>
+            <p> - @quote.Book.Title</p>
+            <form method="post">
+                <button type="submit" title="Delete" class="btn btn-danger" asp-page-handler="deleteQuote" asp-route-id="@quote.BookQuoteId">Delete</button>
+            </form>
+         </div>
+     </div>
+    }
+</div>
