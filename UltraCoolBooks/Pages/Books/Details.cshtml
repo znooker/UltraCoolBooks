@@ -1,6 +1,10 @@
 ﻿@page
 @model UltraCoolBooks.Pages.Books.DetailsModel
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UltraCoolUser> SignInManager
+
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -56,8 +60,24 @@
     
 </div>
 
-
+@if (SignInManager.IsSignedIn(User))
+{
     <partial name="_LeaveReview" />
+}
+else
+{
+  
+    <div class="card text-center w-25 mb-4">
+             <div class="card-body shadow">
+            <h5 class="card-title">You want in on the fun?</h5>
+            <p class="card-text">Sign up today and write your own reviews!</p>
+            <a href="/Identity/Account/Register" class="btn btn-lg btn-primary">Sign me up!</a>
+        </div>
+        
+    </div>
+
+}
+
 
       <div>
           <h2>Reviews</h2>
