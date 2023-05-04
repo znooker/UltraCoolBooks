@@ -7,12 +7,12 @@
 }
 <h1> Reviews</h1>
 <hr />
-@foreach (var review in Model.Reviews)
+@foreach (var review in Model.Reviews) // TEST... här lopar jag igenom för att se att jag fått med datum för alla reviews
 {
    
         <div>
 
-        <p> @review.Created.ToShortDateString()</p>
+        <p> @review.Created.ToShortDateString()</p> 
 
         </div>
 
@@ -23,12 +23,22 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-@{}
+@{
+    DateTime startDate = new DateTime(2023, 4, 10); // Här har jag tillfälligt lagt in ett hårdkodat startDate
+    DateTime endDate = new DateTime(2023, 4, 20); // Här har jag tillfälligt lagt in ett hårdkodat endDate
+    List<DateTime> allDates = new List<DateTime>(); // Här skapas en tom lista
+
+    for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+    {
+        allDates.Add(date); // Här fylls listan på med alla datum i valt spann
+    }
+
+}
 <script>
 
     // Setup Block
-    const numbers = [1, 19, 3, 5, 2, 3];
-    const dates = [
+    const numbers = [1, 19, 3, 5, 2, 3]; // detta är hårdkodade värden som skall bytat ut mot en array som innehäller antal reviews för varje unikt datum
+    const dates = [                // detta är hårdkodade datum som skall bytat ut mot en array som innehäller varje datum i spannet
   new Date(2023, 4, 10),  
   new Date(2023, 4, 15),
   new Date(2023, 4, 20),
