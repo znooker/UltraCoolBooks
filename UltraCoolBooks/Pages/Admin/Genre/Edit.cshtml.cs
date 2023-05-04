@@ -45,7 +45,7 @@ namespace UltraCoolBooks.Pages.Admin.Genre
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Genre.Title.Length > 255 || Genre.Description.Length > 1000)
             {
                 return Page();
             }

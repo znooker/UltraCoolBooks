@@ -54,7 +54,7 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
             AuthorQuote.UserId = _userId;
             AuthorQuote.IsAccepeted = false;
 
-            if (!ModelState.IsValid || _context.AuthorQuote == null || AuthorQuote == null)
+            if (!ModelState.IsValid || AuthorQuote.QuoteText.Length > 255)
             {
                 return Page();
             }

@@ -73,7 +73,7 @@ namespace UltraCoolBooks.Pages.Admin.Author
                 return Page();
             }
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Author.FirstName.Length > 100 || Author.LastName.Length > 100)
             {
                 return Page();
             }

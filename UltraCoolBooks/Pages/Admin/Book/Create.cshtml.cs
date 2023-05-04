@@ -81,7 +81,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
             //NOT FINISHED!!!! - Set User who Created the book, set the logged in user as the creator - NOT FINISHED!!!!
             Book.UserId = user.Id; //Hardcoded value
 
-            if (!ModelState.IsValid || _context.Books == null || Book == null)
+            if (!ModelState.IsValid || Book.Title.Length > 255 || Book.Description.Length > 1000 || Book.ISBN.Length > 20)
             {
                 //ViewData["UserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
 
@@ -147,19 +147,19 @@ namespace UltraCoolBooks.Pages.Admin.Book
             return RedirectToPage("./Index");
         }
 
-        private async void PopulateOptionLists()
+        private void PopulateOptionLists()
         {
-            Authors = await _context.Authors.Select(a => new SelectListItem
+            Authors = _context.Authors.Select(a => new SelectListItem
             {
                 Value = a.AuthorId.ToString(),
                 Text = $"{a.FirstName} {a.LastName}"
-            }).ToListAsync();
+            }).ToList();
 
-            Genres = await _context.Genres.Select(g => new SelectListItem
+            Genres = _context.Genres.Select(g => new SelectListItem
             {
                 Value = g.GenreId.ToString(),
                 Text = $"{g.Title}"
-            }).ToListAsync();
+            }).ToList();
         }
 
         private string ProcessUploadedFile()

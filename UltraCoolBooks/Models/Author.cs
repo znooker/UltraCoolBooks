@@ -8,15 +8,16 @@ namespace UltraCoolBooks.Models;
 
 public partial class Author
 {
+
     public int AuthorId { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string FirstName { get; set; }
-
+    [System.ComponentModel.DataAnnotations.Required]
     public string LastName { get; set; }
     // This property should not be mapped to the database
     [NotMapped]
     public string FullName => $"{FirstName} {LastName}";
-
+    [System.ComponentModel.DataAnnotations.Required]
     public DateTime BirthDate { get; set; }
 
     public DateTime Created { get; set; }

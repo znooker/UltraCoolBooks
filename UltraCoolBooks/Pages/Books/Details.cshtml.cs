@@ -102,7 +102,7 @@ namespace UltraCoolBooks.Pages.Books
             Review.UserId = _userId;
 
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Review.ReviewText.Length > 1000 || Review.Title.Length > 255)
             {
                 return RedirectToPage("/Books/Details", new { id = Review.BookId });
             }
