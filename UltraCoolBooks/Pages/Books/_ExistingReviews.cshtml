@@ -1,41 +1,47 @@
 ﻿@using System.Security.Claims;
 @using UltraCoolBooks.Models;
+
+@inject SignInManager<UltraCoolUser> SignInManager
 @model UltraCoolBooks.Pages.Books.DetailsModel
 
-    
-    @foreach (var review in Model.Reviews)
-    {
-     <div class="card mt-2" style="width:40rem">
-         <div class="card-body">
-         <h5>@review.Title</h5>
-         <p style="font-size:1rem">Rating: @review.Rating</p>
-         <p style="font-size:0.85rem">@review.ReviewText</p>
 
-          <form method="post" asp-page-handler="reviewfeedback" asp-route-id="@review.ReviewId">
-            <button type="submit" title="I like this" class="btn btn-success" name="isHelpful" value="true"><i class="bi bi-hand-thumbs-up"></i></button>
-            <button type="submit" title="I dislike this" class="btn btn-danger" name="isHelpful" value="false"><i class="bi bi-hand-thumbs-down"></i></button>
-            <button type="submit" title="Flag review" class="btn btn-danger" name="hasFlagged" value="true"><i class="bi bi-flag"></i></button>
-         </form>
-         @if (review.Likes != 0) {
+@foreach (var review in Model.Reviews)
+{
+    <div class="card mt-2" style="width:40rem">
+        <div class="card-body">
+            <h5>@review.Title</h5>
+            <p style="font-size:1rem">Rating: @review.Rating</p>
+            <p style="font-size:0.85rem">@review.ReviewText</p>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form method="post" asp-page-handler="reviewfeedback" asp-route-id="@review.ReviewId">
+                    <button type="submit" title="I like this" class="btn btn-success" name="isHelpful" value="true"><i class="bi bi-hand-thumbs-up"></i></button>
+                    <button type="submit" title="I dislike this" class="btn btn-danger" name="isHelpful" value="false"><i class="bi bi-hand-thumbs-down"></i></button>
+                    <button type="submit" title="Flag review" class="btn btn-danger" name="hasFlagged" value="true"><i class="bi bi-flag"></i></button>
+                </form>
+            }
+
+            @if (review.Likes != 0)
+            {
                 <p class="mt-1">Likes: @review.Likes</p>
             }
-         
-            
-         @if (User.IsInRole("Admin") || review.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
-         {
-
-         <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId" class="mt-2">
-             <button type="submit" title="Delete review" class="btn btn-danger">Delete</button>
-             <button type="submit" title="Edit review" class="btn btn-secondary" name="editReview" asp-page-handler="editReview" asp-route-id="@review.ReviewId"><i class="bi bi-pencil-square"></i></button>
-         </form>
-         }
-         <p><b>@review.User.UserName</b> - @review.CreatedTimeAgo<p>
-           
-
-        
-         </div>
-     </div>
 
 
-    }
+            @if (User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+            {
+
+                <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId" class="mt-2">
+                    <button type="submit" title="Delete review" class="btn btn-danger">Delete</button>
+                    <button type="submit" title="Edit review" class="btn btn-secondary" name="editReview" asp-page-handler="editReview" asp-route-id="@review.ReviewId"><i class="bi bi-pencil-square"></i></button>
+                </form>
+            }
+            <p><b>@review.User.UserName</b> - @review.CreatedTimeAgo<p>
+
+
+
+        </div>
+    </div>
+
+
+}
 
