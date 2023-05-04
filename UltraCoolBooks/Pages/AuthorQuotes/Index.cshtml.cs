@@ -19,7 +19,7 @@ namespace UltraCoolBooks.Pages.AuthorQuotes
             _context = context;
         }
         public List<Models.AuthorQuote> AuthorQuotes { get;set; }
-        // This is to check if the user submitted a quote
+        // This is where we will store the TempData from the create model
         public string SubmitConfirmation { get; set; }
         public async Task OnGetAsync()
         {
