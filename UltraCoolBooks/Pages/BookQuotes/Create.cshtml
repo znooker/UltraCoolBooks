@@ -1,0 +1,60 @@
+﻿@page
+@model UltraCoolBooks.Pages.BookQuotes.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Quote</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4" style="width:40rem">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="BookQuote.Book" class="control-label"></label>
+                <select asp-for="BookQuote.BookId" class ="form-control" asp-items="ViewBag.BookId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BookQuote.QuoteText" class="control-label"></label>
+                <p style="font-size: 0.5rem"></p>
+                <textarea asp-for="BookQuote.QuoteText" class="form-control" rows="7" placeholder="Enter text here..." id="quoteTextArea" maxlength="300"></textarea>
+                <div id="charCount"></div>
+                <span asp-validation-for="BookQuote.QuoteText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@*This is the script for the "x characters remaning"*@
+  <script>
+      //this is for reviewTextArea
+      const textarea = document.getElementById("quoteTextArea");
+      const charCount = document.getElementById("charCount");
+      const maxChars = 300;
+
+      // Display initial "characters remaining" indicator
+      const remainingChars = maxChars - textarea.value.length;
+      charCount.textContent = `${remainingChars} characters remaining`;
+
+      // Attach event listener to update indicator on input
+      textarea.addEventListener("input", function() {
+        const remainingChars = maxChars - textarea.value.length;
+        charCount.textContent = `${remainingChars} characters remaining`;
+      });
+  </script>
