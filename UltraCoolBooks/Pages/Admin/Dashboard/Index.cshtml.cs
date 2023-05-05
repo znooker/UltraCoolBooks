@@ -10,8 +10,11 @@ using UltraCoolBooks.Models;
 namespace UltraCoolBooks.Pages.Admin.Dashboard
 {
     public class IndexModel : PageModel
+
     {
-        private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
+		public DateTime startDate = DateTime.Now.AddDays(-7).Date;
+		public DateTime endDate = DateTime.Now;
+		private readonly UltraCoolBooks.Data.ApplicationDbContext _context;
 
         public IndexModel(UltraCoolBooks.Data.ApplicationDbContext context)
         {
@@ -31,9 +34,23 @@ namespace UltraCoolBooks.Pages.Admin.Dashboard
          
 
         }
- 
+		public string DateToString(DateTime? d) //also cut off time
+		{
+			return String.Format($"{d:yyyy-MM-dd}");
+		}
+		public void OnPostDateSelect(string sd, string ed)
+		{
+		
+			startDate = DateTime.Parse(sd);
+			endDate = DateTime.Parse(ed);
+	
+		}
+		List<DateTime> allDates = new List<DateTime>(); // Här skapas en tom lista
 
-    }
+
+
+
+	}
 
 }
 
