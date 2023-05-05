@@ -40,5 +40,27 @@ namespace UltraCoolBooks.Pages.Admin.Review
             }
             return RedirectToPage("/Admin/Review/Index");
         }
+        // Clear the flags for the review
+        public async Task<IActionResult> OnPostClearFlagsAsync(int id)
+        {
+            var review = await _context.Reviews
+                .Include(r => r.ReviewFeedBacks)
+                .FirstOrDefaultAsync(r => r.ReviewId == id);
+                
+
+
+            
+            if (review != null)
+            {
+                foreach (var reviewFeedback in review.ReviewFeedBacks)
+                {
+                    reviewFeedback.HasFlagged = false;
+                }
+
+                review.FLaggedCount = 0;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage("/Admin/Review/Index");
+        }
     }
 }

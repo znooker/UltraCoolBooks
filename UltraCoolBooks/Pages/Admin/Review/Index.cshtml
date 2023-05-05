@@ -38,6 +38,7 @@
          </p>
          <form method="post" asp-page-handler="deletereview" asp-route-id="@review.ReviewId" class="mt-2">
              <button type="submit" title="Delete review" class="btn btn-danger">Delete</button>
+             <button type="submit" title="Clear flags" class="btn btn-secondary" asp-page-handler="clearflags" asp-route-id="@review.ReviewId">Clear flags</button>
          </form>
            
          </div>
