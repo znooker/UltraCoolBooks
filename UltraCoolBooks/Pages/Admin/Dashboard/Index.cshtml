@@ -5,65 +5,24 @@
 	Layout = "../_LayoutAdmin.cshtml";
 
 }
-<h1> Reviews</h1>
+<h1>Statistics</h1>
 <form method="POST" asp-page-handler="DateSelect">
-	@* set params*@
-
 	<input type="date" id="startDate" name="sd"
 		   value="" />
 
 	<input type="date" id="endDate" name="ed"
 		   value="" />
-	<br />
-	
-	<input type="submit" />
+
+	<input type="submit" value="Select" />
 </form>
 <hr />
-@*@foreach (var review in Model.Reviews) // TEST... här lopar jag igenom för att se att jag fått med datum för alla reviews
-{
-   
-		<div>
 
-		<p> @review.Created.ToShortDateString()</p> 
-
-		</div>
-
-}*@
 
 <div >
   <canvas id="myChart"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-@{
-	DateTime startDate = new DateTime(2023, 4, 29 ); // Här har jag tillfälligt lagt in ett hårdkodat startDate
-	DateTime endDate = new DateTime(2023, 5, 5); // Här har jag tillfälligt lagt in ett hårdkodat endDate
-	List<DateTime> allDates = new List<DateTime>(); // Här skapas en tom lista
-
-	for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
-	{
-		allDates.Add(date); // Här fylls listan på med alla datum i valt spann
-	}
-	
-// Här är din array med datum
-string[] dates = new string[] { "2022-05-01", "2022-05-02", "2022-05-02", "2022-05-03", "2022-05-03", "2022-05-03" };
-
-// Här är din array med reviews
-var reviews = new[] {
-	new { date = "2022-05-01", rating = 4 },
-	new { date = "2022-05-02", rating = 5 },
-	new { date = "2022-05-02", rating = 3 },
-	new { date = "2022-05-03", rating = 2 },
-	new { date = "2022-05-03", rating = 4 },
-	new { date = "2022-05-03", rating = 5 }
-};
-
-
-
-
-}
-
-
 
   <div>
 	<canvas id="myChart2"></canvas>
@@ -79,7 +38,7 @@ var reviews = new[] {
 		data: {
 			labels:
 				[
-	@foreach (var d in allDates)
+	@foreach (var d in Model.dates)  //alldate behöver vara en array inte en lista
 	{
 		<text>@d.Day, </text>
 	}
