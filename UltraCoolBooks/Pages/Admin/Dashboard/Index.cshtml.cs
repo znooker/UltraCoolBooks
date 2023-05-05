@@ -37,8 +37,8 @@ namespace UltraCoolBooks.Pages.Admin.Dashboard
 		{
 			startDate = DateTime.Parse(sd);
 			endDate = DateTime.Parse(ed);
+			getStats();
 
-		
 		}
 
 		public string DateToString1(DateTime? d) //also cut off time
@@ -58,7 +58,7 @@ namespace UltraCoolBooks.Pages.Admin.Dashboard
 			{
 				int count = 0;
 				dates.Add(d);
-				foreach (var r in Reviews) //TODO inefficient?
+				foreach (var r in Reviews) 
 				{
 					if (DateToString1(r.Created) == DateToString1(d)) count++;
 				}
@@ -68,11 +68,7 @@ namespace UltraCoolBooks.Pages.Admin.Dashboard
 		
 	
 
-			//for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
-			//{
-			//	dates.Add(date); // Här fylls listan på med alla datum i valt spann
-			//}
-
+		
 		
 
 

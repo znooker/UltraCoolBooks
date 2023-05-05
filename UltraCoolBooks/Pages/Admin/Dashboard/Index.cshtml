@@ -38,17 +38,22 @@
 		data: {
 			labels:
 				[
-	@foreach (var d in Model.dates)  //alldate behöver vara en array inte en lista
+	@foreach (var d in Model.dates)  
 	{
-		<text>@d.Day, </text>
+		<text>@d.Day,</text>
 	}
 				],
 			datasets:
 				[{
 					label: 'Number of reviews',
-					data: [63,69,64,72,75,78,89
-	
-		],
+					data: [
+	@foreach (var c in Model.reviewCount)  
+	{
+		<text>@c, </text>
+	}
+
+
+			],
 					borderWidth: 1
 				}]
 		},
