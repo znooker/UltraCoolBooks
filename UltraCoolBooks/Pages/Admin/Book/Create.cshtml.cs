@@ -80,6 +80,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
 
             //NOT FINISHED!!!! - Set User who Created the book, set the logged in user as the creator - NOT FINISHED!!!!
             Book.UserId = user.Id; //Hardcoded value
+            Book.ImagePath = GetFileExtension();
 
             if (!ModelState.IsValid || Book.Title.Length > 255 || Book.Description.Length > 1000 || Book.ISBN.Length > 20)
             {
@@ -91,7 +92,7 @@ namespace UltraCoolBooks.Pages.Admin.Book
             }
 
             //Check that the uploaded file is a image(png, jpg or jpeg)
-            Book.ImagePath = GetFileExtension();
+            
             var allowedFileExtensions = new[] { ".png", ".jpg", ".jpeg" };
             var fileExtension = Path.GetExtension(Book.ImagePath); //Gets the file extension of the file
             if (!allowedFileExtensions.Contains(fileExtension)) //Checks if the file does not contain a correct file extension

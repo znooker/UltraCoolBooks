@@ -17,7 +17,7 @@ public partial class Book
     public string Description { get; set; }
     [System.ComponentModel.DataAnnotations.Required]
     public string ISBN { get; set; }
-    [System.ComponentModel.DataAnnotations.Required]
+    //[System.ComponentModel.DataAnnotations.Required]
     public string ImagePath { get; set; }
 
     public bool? isDeleted { get; set; }
