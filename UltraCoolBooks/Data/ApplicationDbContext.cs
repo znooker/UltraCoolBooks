@@ -25,6 +25,7 @@ namespace UltraCoolBooks.Data
         public virtual DbSet<Review> Reviews { get; set; }
 
         public virtual DbSet<ReviewFeedBack> ReviewFeedBacks { get; set; }
+        public virtual DbSet<ReviewComment> ReviewComments { get; set; }
         public virtual DbSet<AuthorQuote> AuthorQuotes { get; set; }
         public virtual DbSet<BookQuote> BookQuotes { get; set; }
 
@@ -372,7 +373,18 @@ namespace UltraCoolBooks.Data
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
+            modelBuilder.Entity<ReviewComment>(entity =>
+            {
+                entity.HasIndex(e => e.ReviewId, "IX_ReviewComments_ReviewId");
 
+                entity.HasIndex(e => e.UserId, "IX_ReviewComments_UserId");
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.Review).WithMany(p => p.ReviewComments)
+                    .HasForeignKey(d => d.ReviewId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
 
 
             OnModelCreatingPartial(modelBuilder);

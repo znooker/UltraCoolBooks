@@ -40,6 +40,7 @@ public partial class Review
     public virtual Book Book { get; set; }
 
     public virtual ICollection<ReviewFeedBack> ReviewFeedBacks { get; } = new List<ReviewFeedBack>();
+    public virtual ICollection<ReviewComment> ReviewComments { get; } = new List<ReviewComment>();
 
     public virtual UltraCoolUser User { get; set; }
 }

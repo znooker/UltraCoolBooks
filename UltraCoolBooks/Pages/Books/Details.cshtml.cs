@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -37,8 +38,11 @@ namespace UltraCoolBooks.Pages.Books
         //[BindProperty] binding the property messes up leaving a review.
         public ReviewFeedBack ReviewFeedback { get; set; }
 
+        public ReviewComment ReviewComment { get; set; }
         public List<Review> Reviews { get; set; }
         public List<ReviewFeedBack> ReviewFeedbacks { get; set; }
+        public List<ReviewComment> ReviewComments { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Books == null)
@@ -56,7 +60,13 @@ namespace UltraCoolBooks.Pages.Books
 
             var reviews = _context.Reviews
                 .Include(r => r.User)
-                .Where(r => r.BookId == id && r.IsDeleted != true);
+                .Where(r => r.BookId == id && r.IsDeleted != true)
+                .Include(r => r.ReviewComments);
+
+
+            var reviewComments = _context.ReviewComments
+                .Include(r => r.User)
+                .Where(r => r.Review.ReviewId == r.ReviewId && r.Review.IsDeleted != true);
 
             foreach (var review in reviews)
             {
@@ -84,12 +94,27 @@ namespace UltraCoolBooks.Pages.Books
                 Review = new Review { BookId = book.BookId };
                 ViewData["Book"] = book;
                 Reviews = reviews.ToList();
+                ReviewComments = reviewComments.ToList();
             }
 
 
 
             return Page();
         }
+        //Posting a shit comment
+        public async Task<IActionResult> OnPostAsyncCommentReview(string comment, int reviewId, int bookId)
+        {
+            ReviewComment reviewcomment2 = new ReviewComment() { IsDeleted = false, Comment = comment, UserId = _userId, ReviewId = reviewId };
+            var TestId = Review.BookId;
+
+
+
+            _context.ReviewComments.Add(reviewcomment2);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("/Books/Details", new { id = Review.BookId });
+
+        }
+
 
         //Posting a Review
         public async Task<IActionResult> OnPostAsyncReview()
