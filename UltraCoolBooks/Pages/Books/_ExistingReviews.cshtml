@@ -39,15 +39,43 @@
                 </form>
             }
 
-                
-           
-            <p><b>@review.User.UserName</b> - @review.CreatedTimeAgo<p>
 
+
+            <p><b>@review.User.UserName</b> - @review.CreatedTimeAgo<p>
 
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-4" style="width:40rem">
+            <h2>Leave a Comment</h2>
+            <form asp-page-handler="AsyncCommentReview" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="reviewId" value ="@review.ReviewId"/>
+                <input type="hidden" name="bookId" value="@review.BookId" />
+                <div class="form-group">
+                    <label asp-for="ReviewComment.Comment" class="control-label"></label>
+                    <input asp-for="ReviewComment.Comment" name="comment" class="form -control" placeholder="Comment..." maxlength="1000" />
+                    <span asp-validation-for="ReviewComment.Comment" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary mt-2" />
+                </div>
 
+            </form>
+        </div>
+    </div>
+    <div>
+        <ul>
+            @foreach (var comment in Model.ReviewComments)
+            {
+                if (comment.ReviewId == review.ReviewId)
+                {
+                    <li>@comment.User.UserName: @comment.Comment</li>
+                }
+            }
+        </ul>
+    </div>
 
 }
 
