@@ -170,11 +170,19 @@ namespace UltraCoolBooks.Pages.Books
                     IsHelpful = isHelpful,
                     HasFlagged = hasFlagged
                 };
+                // Flagging a review will automatically downvote the review as well
+                if (reviewFeedback.HasFlagged == true)
+                {
+                    review.FLaggedCount++;
+                    isHelpful = false;
+                }
 
                 // Add the new review feedback to the context
                 _context.ReviewFeedBacks.Add(reviewFeedback);
 
                 // Update the Upvotes and Downvotes properties
+
+
                 if (isHelpful == true)
                 {
                     review.Upvotes++;
@@ -183,9 +191,7 @@ namespace UltraCoolBooks.Pages.Books
                 {
                     review.Downvotes++;
                 }
-                if (reviewFeedback.HasFlagged == true){
-                    review.FLaggedCount++;
-                }
+
             }
             else
             {
@@ -197,6 +203,12 @@ namespace UltraCoolBooks.Pages.Books
                 reviewFeedback.HasFlagged = hasFlagged;
 
 
+                // Automatically downvote a review if you flagged it
+                if (hasFlaggedBefore == false && hasFlagged == true)
+                {
+                    review.FLaggedCount++;
+                    isHelpful = false;
+                }
 
                 // Update the Upvotes and Downvotes properties
                 if (isHelpful == true && isHelpfulBefore == false)
@@ -210,10 +222,7 @@ namespace UltraCoolBooks.Pages.Books
                     review.Upvotes--;
                 }
 
-                if (hasFlaggedBefore == false && hasFlagged == true)
-                {
-                    review.FLaggedCount++;
-                }
+
             }
 
             // Calculate the total number of likes
